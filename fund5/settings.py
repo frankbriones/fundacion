@@ -10,10 +10,10 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
-# import os
+import os
 
 # # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-# BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
 # Quick-start development settings - unsuitable for production
@@ -25,7 +25,7 @@ SECRET_KEY = '-v=q6ry5d8=bcpczvblq68xc(n*hg0#_9b4p65(tc162f#0nb*'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 #ALLOWED_HOSTS = ['*']
-ALLOWED_HOSTS = ['heroku.com', '127.0.0.1']
+ALLOWED_HOSTS = ['.heroku.com', '127.0.0.1']
 
 #https://pypi.org/project/django-admin-interface/
 # Application definition
