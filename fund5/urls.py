@@ -16,7 +16,7 @@ from django.utils.translation import ugettext_lazy as _
 urlpatterns = [
     path('admin/doc/', include('django.contrib.admindocs.urls')),
     path('admin/', admin.site.urls),
-    path('', include(('website.urls', 'website'), namespace='home')),
+    path('/', include(('website.urls', 'website'), namespace='home')),
     path('modulo-donaciones/', include(('donacion.urls', 'donacion'), namespace='donacion')),
     path('modulo-usuario/', include(('persona.urls', 'persona'), namespace='persona')),
     path(
