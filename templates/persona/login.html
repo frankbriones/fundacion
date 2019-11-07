@@ -1,0 +1,34 @@
+{% extends "persona/base.html" %}
+
+{% block head_content %}
+<title>Fundacion </title>
+{% endblock%}
+
+{% block container %}
+
+
+
+
+
+    {% if form.errors %}
+        <p class="alert alert-danger">
+            Tu usuario y password estan incorrectas, por favor vuelve a intentar.
+        </p>
+    {% endif%}
+
+
+
+    
+<!-- script para mostrar la contrasena de el login -->
+<script>
+  function mostrarContrasena(){
+      var tipo = document.getElementById("txtPassword");
+      if(tipo.type == "password"){
+          tipo.type = "text";
+      }else{
+          tipo.type = "password";
+      }
+  }
+</script>
+    
+{% endblock %}

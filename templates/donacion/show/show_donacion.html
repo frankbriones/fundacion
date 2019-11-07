@@ -1,0 +1,166 @@
+{% extends "donacion/base.html" %}
+{% load staticfiles %}
+{% load mathfilters %}
+{% load bootstrap4 %}
+
+
+{% block tittle %} Listado de Donacion{% endblock %}
+
+{% block content %}
+		 <section class="">
+		 	<div class="tools d-print-none">
+											<div class="btn-group  ">
+												<a class="btn btn-floating-action btn-primary" href="javascript:void(0);" onclick="javascript:window.print();"><i class="fas fa-print"></i></a>
+											</div>
+										</div><br>
+		 	
+                    
+					<div class="section-body bg-white">
+                        <div class="row">
+							<div class="col-lg-12">
+								
+									<!--end .card-head -->
+									<div class="card-body style-default-bright" id="print">
+
+										<!-- BEGIN INVOICE HEADER -->
+										<div class="row bg-white">
+											<!--<div class="col-xs-2">
+												<img src="{% static 'img/django_logo.png' %}" class="invoice_logo" width="100%">
+											</div>-->
+											<div class="col-xs-8 bg-white">
+												<h1 class="text-warning" style="margin-top: 0px; ">FUNDACION <strong class="text-accent-dark" style="color: #1ab394">TACITA CALIENTE</strong></h1>
+												<p>Direccion: Hurtado y Carchi<br>Guayaquil, Ecuador</p>
+											</div>
+											<br>
+											<div class="col-2 text-right bg-white">
+												
+											</div>
+
+										<div class="container text-center bg-white  ">
+												<h1 class="text-light text-dark">INGRESO DE DONATIVO</h1>
+											</div>
+
+										</div><!--end .row -->
+										<!-- END INVOICE HEADER -->
+
+										<br/>
+
+										<!-- BEGIN INVOICE DESCRIPTION -->
+										<div class="row">
+											<div class="col-xs-8 p-4">
+												<h4 class="text-dark">Realizado por: </h4><strong>{{donacion.persona.nombres }} {{donacion.persona.apellido_paterno }}</strong><br><br>
+													
+												<address>
+													
+													<b>Telefono:</b> {{ donacion.persona.celular }}
+												</address>
+											</div><!--end .col -->
+											<div class="col-md-6 col-sm-2 col-lg-6 text-center">
+												
+												<div class="well">
+													<div class="clearfix">
+														<div class="pull-left"> <h4>Correo :</h4> </div>
+														<div class="pull-right"> {{ donacion.persona.correo }} </div>
+													</div>
+													<div class="clearfix"><br>
+														<div class="pull-left"> Fecha Donacion : </div>
+														<div class="pull-right"><b>{{ donacion.created }} </b> </div>
+													</div>
+													
+												</div>
+											</div>
+											<div class="col-xs-4">
+												<div class="well">
+													<div class="clearfix">
+														<div class="pull-left"> <h4>Donacion :</h4> </div>
+														<div class="pull-right"> #00{{ donacion.id }} </div>
+													</div>
+													<div class="clearfix"><br>
+														<div class="pull-left"> Total de Donacion : </div>
+														<div class="pull-right"><h3><b>{{ cantidad.suma }} </b></h3> </div>
+														
+													</div>
+													
+												</div>
+											</div><!--end .col -->
+										</div><!--end .row -->
+										<!-- END INVOICE DESCRIPTION -->
+
+										<br/>
+
+										<!-- BEGIN INVOICE PRODUCTS -->
+										
+
+
+										<div class="row p-4">
+											<div class="col-md-12">
+												<table class="table">
+													<thead>
+
+													
+														<tr>
+															<th >ID</th>
+															<th >DESCRIPCION</th>
+															<th class="text-center">TIPO</th>
+															<th class="text-left" ></th>
+
+															<th class="text-left" ></th>
+
+															
+															<th class="text-left" >FECHA EXPIRA</th>
+
+															<th class="text-left" ></th>
+
+															<th class="text-center" ></th>
+															<th  >CANTIDAD</th>
+														</tr>
+													</thead>
+													<tbody>
+														{% for producto in productos %}
+														<tr>
+															<td class="text-left">{{ producto.id }}</td>
+															<td class="text-left">{{ producto.descripcion }}</td>
+															<td class="text-center">{{producto.tipo.nombre}}</td>
+															<td class="text-left"></td>
+															<td class="text-left"></td>
+															<td class="text-left">{{ producto.fecha_expiracion }}</td>
+															<td class="text-left"></td>
+															<td class="text-left"></td>
+															<td class="text-center"><b>{{ producto.cantidad }}</b></td>
+														</tr>
+														{% endfor %}
+													</tbody>	
+
+																							
+												</table>
+											</div><!--end .col -->
+										</div><!--end .row -->
+
+						
+										<!-- END INVOICE PRODUCTS -->
+
+									</div><!--end .card-body -->
+									<div class="card-footer text-right bg-white">
+										
+														<table calss="table">
+														
+															
+														</table>
+
+														<br>
+														<br>
+														<div class="card-footer bg-white">Firma. ______________________</div>
+														
+
+														
+															
+									</div>
+								</div><!--end .col -->
+							</div><!--end .row -->
+						</div><!--end .section-body -->
+					
+                </section>	
+{% endblock %}
+
+{% block footer%}
+{% endblock%}

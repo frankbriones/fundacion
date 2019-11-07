@@ -1,0 +1,153 @@
+{% extends "donacion/base.html" %}
+{% load staticfiles %}
+{% load mathfilters %}
+{% load bootstrap4 %}
+
+
+
+{% block tittle %}Listado de Talleres{% endblock%}
+{% block content %}
+		 
+		 	{% if talleres %}
+		 	<div class="tools d-print-none">
+											<div class="btn-group  ">
+												<a class="btn btn-floating-action btn-primary" href="javascript:void(0);" onclick="javascript:window.print();"><i class="fas fa-print"></i></a>&nbsp;&nbsp;&nbsp;
+												<a data-toggle="tooltip" data-placement="top" title="retornar" href="{% url 'donacion:reportes' %}" class="btn bold ink-reaction btn-floating-action btn-danger">Retornar </a>
+											</div>
+										</div><br>
+			{% else %}
+			<a data-toggle="tooltip" data-placement="top" title="retornar" href="{% url 'donacion:reportes' %}" class="btn bold ink-reaction btn-floating-action btn-danger">Retornar </a>
+			<br>
+			{% endif %}
+		
+                    
+                        <div class="row">
+							<div class="col-lg-12">
+								<div class="style-default-light">
+									<!--end .card-head -->
+									<div class="card-body style-default-bright" id="print">
+
+										<!-- BEGIN INVOICE HEADER -->
+										<div class="row text-center">
+											<!--<div class="col-xs-2">
+												<img src="{% static 'img/django_logo.png' %}" class="invoice_logo" width="100%">
+											</div>-->
+											<div class=" col-12 ">
+												<h1 class="text-warning" style="margin-top: 0px; ">FUNDACION <strong class="text-accent-dark" style="color: #1ab394">TACITA CALIENTE</strong></h1>
+											</div>
+											<br>
+											
+
+										<div class="container text-center  ">
+												<h2 class="text-light text-dark">LISTADO DE TALLERES</h2>
+											</div>
+
+										</div><!--end .row -->
+										<!-- END INVOICE HEADER -->
+
+										<br/>
+
+										<!-- BEGIN INVOICE DESCRIPTION -->
+										<div class="row">
+											<div class="col-xs-8">
+												<h4 class="text-dark">Realizado por: </h4><strong>{{user.nombres}} {{user.apellidos}}</strong><br><br>
+													
+												<address>
+													
+													
+												</address>
+											</div><!--end .col -->
+											<div class="col-md-6 col-sm-2 col-lg-6 text-right">
+												
+											</div>
+											<div class="col-xs-4">
+												<div class="well">
+													<div class="clearfix">
+														<div class="pull-left"> <h4>Fecha de Hoy :</h4> </div>
+														<div class="pull-right"> {{ date }} </div>
+													</div>
+													
+													
+												</div>
+											</div><!--end .col -->
+										</div><!--end .row -->
+										<!-- END INVOICE DESCRIPTION -->
+
+										<br/>
+
+										<!-- BEGIN INVOICE PRODUCTS -->
+										
+
+
+										<div class="row">
+											<div class="col-md-12">
+												{% if talleres %}
+												<table class="table table-bordered">
+													<thead>
+
+													
+														<tr>
+															<th class="text-left badge-secondary " width="8%" >ID</th>
+															<th class="badge-secondary " colspan="2" width="30%">CATEGORIA</th>
+															<th class="text-left badge-secondary " width="20%">ENCARGADO</th>
+
+															
+															<th class="text-left badge-secondary " width="20%" >FECHA </th>
+
+															<th  class="text-left badge-secondary " colspan="5" >Notas</th>
+														</tr>
+													</thead>
+													<tbody>
+														
+																{% for taller in talleres %}
+																<tr>
+																	<td class="text-left">{{ taller.id }}</td>
+																	<td class="text-left">{{ taller.get_categoria_display }}</td>
+																	<td class="text-left">{{ taller.descripcion }}</td>
+																	<td class="text-center"><strong>{{taller.persona}}  </strong></td>
+																	<td class="text-left">{{ taller.fecha_inicio }}</td>
+																	
+																	<td class="text-right"><b></b></td>
+																</tr>
+																{% endfor %}
+														
+														<br>
+														
+								</tbody>	
+
+													<tfoot class="">
+														
+																											
+													</tfoot>												
+												</table>
+												{% else %}
+												<div class="row">
+				         			<div class=' col-12 text-center '>
+				         				<b> <h4 class=" bg-info text-light p-2 " >No existen Datos Talleres para esta fecha   <strong>{{query1}}</strong>
+											</h4></b>
+				         			</div>
+			         			</div>
+			         						{% endif %}
+											</div><!--end .col -->
+										</div><!--end .row -->
+
+						
+										<!-- END INVOICE PRODUCTS -->
+
+									</div><!--end .card-body -->
+									{% if talleres %}
+									<div class="card-footer">Firma. ______________________</div>
+									{% else %}
+									{%endif%}
+								</div><!--end .card -->
+							</div><!--end .col -->
+						</div><!--end .row -->
+					</div><!--end .section-body -->
+                </section>	
+{% endblock %}
+
+
+
+
+{% block footer%}
+{% endblock%}

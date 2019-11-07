@@ -1,0 +1,155 @@
+{% load i18n %}
+{% load staticfiles %}        
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+        <meta charset="utf-8">
+        <link rel="shortcut icon" href="{%  static 'img/tclogo.ico' %}">
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="keywords" content="your,keywords">
+        <meta name="description" content="Short explanation about this website">
+            
+    
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/styles2.css' %}" />
+    
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" crossorigin="anonymous" />
+
+
+
+    {% block head_content %}{% endblock %}
+
+    {% load static %}
+ <style>
+ #coche {
+    animation-name: animacionCoche;
+    animation-duration: 2s;
+    animation-iteration-count: 1;
+    position: relative;
+   }
+   
+   @keyframes animacionCoche{
+    from{
+        opacity: 0;
+        transform : rotateY(360deg);
+    }
+    to{
+        opacity: 1;
+    }
+   }
+    
+
+
+   #opaco {
+    animation-name: animacionTitulo;
+    animation-duration: 2s;
+    animation-iteration-count: 1;
+    
+   }
+
+   @keyframes animacionTitulo{
+    from {
+      opacity: 0;
+      /*transform : rotateX(360deg);*/
+    }
+    20% {
+        opacity: .25;
+    }
+    40%{
+        opacity: .50;
+    }
+    75%{
+        opacity: .80;
+    }
+    
+    to{
+      opacity: 1;
+    }
+   }
+
+
+
+
+</style>
+
+</head>
+<body  class="body">
+    {% block content %}
+<br>
+    <section class="login">
+
+         {% if form.errors %}
+         <div class="alert alert-danger">
+             
+        <p class="font-weight-bold ">
+            Tu usuario y password estan incorrectas, por favor vuelve a intentar.
+        </p>
+         </div>
+    {% endif%}
+   
+    <div   id="coche" class="row justify-content-center" >
+            <a href ="/"    >
+            <img src="{% static 'img/logo3.jpg' %}"  style=" height: 100px; width: 100px; 
+                                          border-radius:160px; "/>
+        </a>
+    </div> 
+    <section   id="opaco" >
+            <p class="textito h1 font-weight-bold text-light"> Bienvenido</p>
+    </section>  
+
+      <section class="login__container" id="opaco">
+            <h2 class="d-none d-lg-block">Inicia sesión</h2><br>
+            <p class="text-uppercase text-light"> Solo usuarios registrados</p>
+        <form method="POST" action="{% url "persona:login" %}" class="login__container--form" >
+                {% csrf_token %}
+                
+                    <input class="input text-light bck" type="text" placeholder="Email" name="username" id="txtCorreo" required />
+                
+
+                    
+
+                   
+                      
+                        <input id="txtPassword" class="input" type="password" placeholder="Password" name="password" required />
+                        
+                        <button id="show_password" class="button text-dark" type="button" onclick="mostrarContrasena()"> <span class="fa fa-eye-slash icon"></span> </button>
+                        
+
+                    
+                <button class="button" type="submit">Autenticar</button>
+                <input type="hidden" name="next" value="{{ next }}" />
+
+                <br>
+                 <div class="login__container--remember-me">
+                    <b><a href="{% url 'password_reset' %}" class="btn btn text-light "><strong>restablecer password</strong></a></b>
+               
+
+                </div>
+               
+
+    </form>
+</section>
+  </section>
+  
+  
+
+   
+
+{% endblock %}
+<script>
+  function mostrarContrasena(){
+      var tipo = document.getElementById("txtPassword");
+      if(tipo.type == "password"){
+          tipo.type = "text";
+      }else{
+          tipo.type = "password";
+      }
+  }
+</script>
+
+
+
+</body>
+</html>

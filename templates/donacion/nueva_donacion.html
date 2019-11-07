@@ -1,0 +1,94 @@
+{% load staticfiles %}
+{% load bootstrap4 %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}"/>
+
+    <link rel="stylesheet" type="text/css" href="{% static 'css/jquery-ui.css' %}"/>
+
+    <link rel="stylesheet" type="text/css" href="{% static 'css/estiloss.css'  %}" />
+</head>
+<body>
+
+        
+        <div class="row  justify-content-center ">
+
+
+            
+
+										      </div>
+			     
+
+					                             	
+					         
+					             <div class="card-body">
+									               <form class="form-group" role="form" action="{% url 'donacion:donacion' %}" method="post">
+											       
+											                   {% csrf_token %}
+											                    <div class="row">
+											                    	
+															      <div class="col-lg-10 col-md-8 col-sm-12	">
+															         {% bootstrap_form form  %}
+															      </div>
+															      
+																<div class="col-lg-2 col-md-2 col-sm-12 text-sm-center text-lg-left" >
+																			      	<a class="btn "  href="{% url 'persona:persona' %}" >
+													                                <h3 class="text-primary"><span class="fas fa-plus " data-toggle="tooltip" data-placement="top" title="Registrar Nuevo Voluntario"></span></h3>	
+													                            	</a>
+																</div>
+																<div class="col-lg-1 col-md-2 ">
+																	
+																</div>
+															    </div>
+															    <br>
+																	
+															   
+													   <div class="row justify-content-center"> 						    
+													    			<div class="col-6 text-center">
+													    				<button type="submit"  class="btn btn-block btn-primary">Registrar</button>
+																	  </div>			    
+																	 <button type="button" class="btn btn-platzi" onclick="return cerrar_modal()">
+				Cancelar
+			</button>
+
+
+																	   
+														</div>
+												</form>  
+								</div>
+							</div>
+			</div>
+		</div>
+
+		<script>
+var modal;
+function abrir_modal(url, titulo)
+{
+    modal = $('#popup').dialog(
+    {
+        title: titulo,
+        modal: true,
+        width: 500,
+        resizable: false
+    }).dialog('open').load(url)
+}
+
+function cerrar_modal()
+{
+    modal.dialog("close");
+}
+
+
+
+</script>
+
+<script src="" type="text/javascript" charset="utf-8" async defer>
+	var persona = document.getElementById("id_persona").classList.toggle('selecti');
+	
+</script>
+
+</body>
+</html>

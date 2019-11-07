@@ -1,0 +1,175 @@
+{% extends "donacion/base.html"%}
+{% load staticfiles %}
+{% load bootstrap4 %}
+
+{% load crispy_forms_tags %}
+
+
+{% block tittle %} Correo Administrador{% endblock %}4
+]
+
+
+{% block content %}
+
+
+
+                              <br>
+<div class="row justify-content-center">
+  <div class=" col-sm-12 col-md-6"> 
+    <div  class="card">
+      <div class="card-header">
+        <div class="row justify-content-center">
+          <h3 class="text-info">Envio de Correo.</h3>
+        </div>
+      </div>
+
+  <div  class="card-body">
+    
+    <div class="row justify-content-center">
+      <h3>Enviar correo al personal del sistema.</h3>
+      <p class="text-platzi font-weight-bold text-center"> Se recuerda que este medio para enviar correos, no es para comunicacion en grupo. solo para ejecutar dudas y preguntas.<br>Con el personal de la fundacion.</p>
+    </div>
+      <br>
+        
+         <form  id="formulario" action="" method="post">
+{% csrf_token %}
+{{ formulario | crispy}}
+
+
+<div class="row">
+    <div class="col-4 text-left">
+        
+    </div>
+    <div class="col-4">
+      
+              <input type="submit" class="btn btn-primary btn-block" name="Enviar Correo">
+ 
+
+
+    </div>
+    <div class="col-4 text-right">
+
+    </div>
+</div>
+
+</form>
+
+        
+
+
+
+  </div>
+  
+</div>
+  </div>
+
+  <div class="col-md-6 col-sm-12">
+    <div class="row pt-2">
+      <div class="col-12">
+        <form action="" class=form-group>
+      
+          <div  class="col-12 text-left pb-4">
+           Cantidad de Personal: {{users.count}} 
+            
+          </div>
+          <div class="col-12 text-left">
+            
+            <input type="text" class="form-group rounded border-success" name="query" value="{{query}}" placeholder="Buscador..." required />
+            <input type="submit" class="btn btn-platzi" value="Consultar"  />
+          </div>
+          </form>
+      </div><br>
+      
+          
+        </div>
+
+     <div class="row pt-4">
+          <div class="col-12 text-primary text-center">
+            <p class=" h4 text-uppercase">
+              Listado de usuarios
+            </p>
+            
+          </div>
+        </div>
+      <div class="card">
+       
+
+
+<table class="table " id="tabla">
+  <thead class="table-dark ">
+    <tr>
+       <th>Nombre</th>
+      <th>Correo</th>
+      <th> Accion</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for usuario in usuarios %}
+    <tr>
+      <td>{{usuario.nombres }} {{ usuario.apellidos}}</td>
+      <td type="text"class="numero">{{usuario.email }}</td>
+      <td class="boton"> <span class="btn btn-primary fas fa-plus" ></span></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+      </div>
+
+          <div class="row justify-content-center pt-4">
+                  <nav aria-label="Page navigation example">
+             <ul class="pagination ">
+                {% if usuarios.has_previous %}<li class="page-item"><a class="page-link" href="?page={{usuarios.previous_page_number}}&query={{ query }}">Anterior</a></li>{% endif %}
+                <li class="page-item"><a class="page-link" >Página {{ usuarios.number }} de {{ usuarios.paginator.num_pages }}</a></li>
+               
+                {% if usuarios.has_next %}<li class="page-item"><a class="page-link" href="?page={{usuarios.next_page_number}}&query={{ query }}">Siguiente</a></li>{% endif %}
+              </ul>
+            </nav>
+        </div>
+
+  </div>
+</div>
+{% endblock %}
+{% block footer %}
+
+{% endblock%}
+{% block extra_js %}
+<!-- https://es.stackoverflow.com/questions/31875/obtener-valores-de-una-tabla-fila-x-fila-jquery -->
+<script>
+    $(document).ready(function() {
+
+      $(".boton").click(function() {
+
+        var valores = "";
+
+        // Obtenemos todos los valores contenidos en los <td> de la fila
+        // seleccionada
+        $(this).parents("tr").find(".numero").each(function() {
+          valores += $(this).html() + "\n";
+        });
+        console.log(valores);
+        document.getElementById("id_correo").value = valores;
+        
+      });
+    });
+  </script>
+
+
+<!-- 
+  <script>
+    
+    function valorCorreo(){
+      var email = document.getElementsByTagName("td")[1].innerHTML;
+      
+      alert(email);
+      
+      // alert(email);
+
+      // var porElementos=document.forms["formulario"].elements[0].value;
+      // alert(porElementos);
+      document.getElementById("id_correo").value = email;
+
+    }
+  </script> -->
+
+{% endblock%}

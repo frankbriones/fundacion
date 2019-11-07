@@ -1,0 +1,156 @@
+{% extends "donacion/base.html" %}
+{% load bootstrap4 %}
+
+
+
+{% block tittle %} Detalle de Evento{% endblock %}
+{% block content %}
+
+ <body >
+		
+    
+        
+        <div class="row  justify-content-center ">
+            <div class=" col-md-12	col-sm-12  col-lg-10 p-4 " >
+            	    
+        <h3 class="page-header text-primary">DETALLE DEL EVENTO :</h3>
+            <div class="card-head">
+														    
+										   &nbsp;&nbsp;&nbsp;&nbsp;
+										  <a data-toggle="tooltip" data-placement="top" title="retornar" href="{% url 'programa:programas' %}" class="btn bold ink-reaction btn-floating-action btn-danger">Retornar </a>
+										
+									</div><br>
+        
+        <hr class="mt-0 mb-4">
+
+   
+   
+
+		<div class="row">
+		    <div class="col-lg-12">
+		        <div class="panel panel-default p-4"id="auth-container"">
+		            
+		            <div class="panel-body">
+		            <div class="row">
+		            	<div class="col-4">
+		             <b>Descripcion:</b>	<br>
+		             <p class="text-info">{{  programa.nombre }}</p>
+		             <br>
+		             </div>
+		            <div class="col-4">
+		            	<b>Programa que Realiza:</b>	<br>
+		             <p class="text-info">{{  programa.evento.nombre }}</p>
+		             <br>
+		            </div>
+		            <div class="col-4">
+		            	<b>Encargado:</b>	<br>
+		             <p class="text-info">{{  programa.evento.persona }}</p>
+		             <br>
+		            </div>
+		            
+		         </div>
+		         <div class="row">
+		         	 <div class="col-4">
+		             <b>Fecha Programada:</b>	<br>
+		             <p class="text-info">{{  programa.fecha_programa }}</p>
+		             <br>
+		             </div>
+		             <div class="col-4">
+		             <b>Fecha de culminacion: </b>	<br>
+		             <p class="text-info">{{  programa.fecha_culminacion }}</p>
+		             <br>
+		             </div>
+		             <div class="col-4">
+		             	
+		             <b>Ayudante: </b>	<br>
+		             <p class="text-info">{{  programa.persona }}</p>
+		             <br>
+		             </div>
+		         </div>
+		         {% if totals  %}
+   							
+							<div class="row">
+				         			<div class=' col-12 text-center text-secondary'>
+				         				<h4 >PRODUCTOS REGISTRADOS AL PROGRAMA </h4>
+				         			</div>
+			         			</div>
+
+
+		            
+		         	<table id="tabla" class="table table-responsive-lg table-responsive-md table-responsive-sm">
+		                            <thead>
+		                                <tr class="">
+		                                    
+		                                    <th class="text-center ">TIPO</th> 
+		                                    <th class="text-center">EVENTO</th>
+											<th class="text-center">PRODUCTO</th>		                                    		                                    
+		                                    <th class="text-center">CANTIDAD</th>
+		                                    
+		                                 </tr>
+		                            </thead>
+                            	<tbody>
+
+			                            {% for total in totals %}
+			                                <tr>
+			                                    
+			                                    <td class="text-center">{{ total.tipo.nombre }}</td>
+												<td class="text-center">{{ total.programa.nombre}}</td>
+												<td class="text-center">{{ total.producto.descripcion }}</td>
+												<td class="text-center">{{ total.cant }}</td>
+												
+                                               
+
+                                            </tr>
+                                            
+                                            	
+                                            	
+                                            
+			                            {% endfor %}
+
+			                            
+                           	 	</tbody>
+                           	 	<tfoot>
+									    <tr>
+									      <td></td>
+									      <td></td>
+									      <td></td>
+									      <td class="text-center"><b>Total</b><h3>{{ canti.suma }}</h3></td>
+									      
+									    </tr>
+									  </tfoot>
+                             </table>
+                             {% else %}
+								<div class="row ">
+				         			<div class="col-lg-12 col-md-10 col-sm-8 bg-info text-light text-center pt-2  ">
+				         				<h4  >NO EXISTEN REGISTRO DE PRODUCTOS PARA ESTE PROGRAMA</h4>
+				         			</div>
+			         			</div>
+
+                         	         				
+							{% endif %}
+
+
+
+
+
+
+
+
+		            </div>
+		            
+		        </div>
+		    </div>
+		</div>
+
+   </div>
+   </div>
+
+   
+</body>
+{% endblock %}
+
+
+
+
+{% block footer%}
+{% endblock%}

@@ -1,0 +1,292 @@
+
+{% extends "donacion/base.html" %}
+{% load staticfiles %}
+{% load bootstrap4 %}
+
+{% block tittle %} Modulo de Voluntarios{% endblock %}
+{% block static %}
+<style  >
+  #taller {
+    animation-name: animacionTaller;
+    animation-duration: 1000ms;
+    animation-iteration-count: 1;
+    position: relative;
+   }
+   
+   @keyframes animacionTaller{
+    from{
+        opacity: 0;
+    }
+    to{
+        opacity: 1;
+    }
+   }
+</style>
+{% endblock %}
+
+
+{% block content %}
+{% if perms.persona %}                             
+    
+
+
+    
+{% if perms.persona.can_persona %}
+
+<div class="card border rounded" id="taller">
+  <div class="row">
+     <div class="col-12 text-center">
+        <b> <h3 class=" border rounded text-light p-2 " id="content" >MODULO DE VOLUNTARIOS</h3></b>
+       
+    </div>
+  </div>
+    
+    <div class="card-body">
+<div class="col-lg-12 col-sm-12 col-md-12">
+   
+
+   
+    
+    
+    		<div class="container-fluid text-center" ">
+    		  	<div class=" row">
+    		  	<div class="col-lg-4 text-center center">
+              <div class="card-body">
+                
+              
+						<table class="table table-striped table-bordered ">
+					  <thead>
+					    <tr>
+					      
+					      <th scope="col" colspan="2">Genero</th>
+					      <th scope="col">Total</th>
+					      
+					    </tr>
+					  </thead>
+					  <tbody class="tbody">
+					    <tr>
+					       <td ><i class="fas fa-male ">  </i></td>
+					      <td>HOMBRES</td>
+					      <td>{% if hombres is None %}
+    		  	  0
+    		  	 {% else  %}
+    		  	 
+    		  	 {{ hombres.count  }} 
+    		  	 
+    		  	 {% endif %}
+    		  	 </td>
+					      
+					    </tr>
+					    <tr>
+					     <td ><i class="fas fa-female "> </i></td>
+					      <td>MUJERES</td>
+					      <td>{% if mujeres is None %}
+    		  	  0
+    		  	 {% else  %}
+    		  	 
+    		  	 {{ mujeres.count  }} 
+    		  	 
+    		  	 {% endif %}
+    		  	 </td>
+					      
+					    </tr>
+              
+					    
+					  </tbody>
+					</table>
+        </div>
+				</div><br>
+    		  	<div class="col-lg-4 text-center center">
+    		  	</div>	
+
+            <div class="col-lg-4  col-md-12 col-sm-12  p-2 text-lg-right text-md-center  "  >
+    		  	<div class=card>
+              <div class="card-header">
+                <h5>Total de voluntarios Activos</h5>
+                
+              </div>
+                
+
+                  <div class="card-body">
+                    
+             {% if total is None %}
+              <h1>0</h1>
+             {% else  %}
+             <h1 >
+             {{ total.count  }} 
+             </h1>
+             {% endif %}
+                  </div>
+            </div>
+    		  	
+    		  	 
+    		  	 </div>  				
+ 			</div>  
+	</div>
+</div>
+
+
+
+</div>
+</div>
+{% else %}
+{% endif %}
+  <!-- code here to list the books -->
+  	
+                <br>
+ <div class="row-lg-12 text-center">
+            {% if msg1   %}
+          <div class=" alert alert-primary alert-dismissible col-lg-12 col-md-12 col-sm-12 h-25">
+                  <button type="button" class="close" data-dismiss="alert">&times;</button>
+              <b class=" "><p>{{ msg1 }}</p></b>
+              </div>
+        {% endif %}
+     </div>
+
+     <div class="row-lg-12 text-center">
+            {% if msgV  %}
+          <div class=" alert alert-primary alert-dismissible col-lg-12 col-md-12 col-sm-12 h-25">
+                  <button type="button" class="close" data-dismiss="alert">&times;</button>
+              <b class=" "><p>{{ msgV }}</p></b>
+              </div>
+        {% endif %}
+     </div>
+                
+                    <div class="row">                 
+                        <div class="col-lg-4 col-md-4 col-sm-12 text-center pt-2">    
+                              <a id="crear_detalle" href="{% url 'persona:list_capacitador' %}" class="btn btn-platzi "><i class="fas fa-smile-beam "> Capacitadores</i></a>
+                                                                
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-12 text-center pt-2">
+                               <a id="add_id_persona" href="{% url 'persona:chart_data' %}" class="btn btn-platzi ">
+                                <span class="fas fa-chart-bar"></span>
+                            </a>
+                            
+                        </div> 
+                         <div class="col-lg-4 col-md-4 col-sm-12 text-center pt-2">    
+                               
+                          <a id="add_id_persona" href="{% url 'persona:persona' %}" class="btn btn-platzi "> 
+                                <span class="fas fa-plus-circle"> Voluntario</span>
+                            </a>
+                                                                              
+                        </div>   
+                                                
+                    </div>
+                    <br>
+                
+ 		
+                     <div class="container-fluid text-center col-sm-12 col-lg-12 col-md-12 " id="auth-container "><br>
+                        <table id="tabla" class="table table-dark   table-responsive-lg table-responsive-md table-responsive-sm " cellspacing="0" width="100%">
+		                            <thead class="">
+                                  <div class="row justify-content-center"> <h4>LISTADO DE VOLUNTARIOS Y CAPACITADORES ACTIVOS</h4></div>
+		                                <tr class="">
+		                                    
+		                                    
+		                                    <th class="text-center " width="20%">NOMBRE</th> 
+		                                    <th class="text-center" width="20%">APELLIDOS</th>
+		                                    
+		                                    <th class="text-center" width="5%">EDAD</th>
+                                        <th class="text-center" width="40%">CORREO</th>
+
+                                        <th class="text-center" width="15">CEDULA</th>
+		                                    
+		                                    <th class="text-right" width="20%">ACCIONES</th>                                  
+		                                </tr>
+		                            </thead>
+                            	<tbody class="text-dark">
+			                            {% for persona in personas %}
+			                                <tr>
+			                                    
+			                                    <td class="text-center"><strong>{% if persona.nombres == 'Anonimo' %}<strong class="text-danger">{{persona.nombres}}</strong>{% else %}{{ persona.nombres }}{%endif%}</strong>  </td>
+			                                    <td class="text-center"><strong>{{ persona.apellido_paterno }} {{ persona.apellido_materno }}</strong> </td>
+			                                    
+			                                    <td class="text-center"><strong>{{  persona.edad}}</strong> </td>
+                                          <td class="text-center"><strong>{{  persona.correo }}</strong> </td>
+                                          <td class="text-center"><strong>{{  persona.cedula }}</strong> </td>
+												<td class="text-right">
+                                                                <a href="{% url 'persona:edicion' persona.id %}" class="btn ink-reaction btn-floating-action btn-secondary"><i class="fas fa-edit"></i> </a>
+                                                                <a href="{% url 'persona:detalle' persona.id %}" class="btn ink-reaction btn-floating-action btn-info  d-md-inline-block d-sm-none "><i class="fas fa-eye"></i> </a>
+                                                                
+                                                                <!--<a href="" class="btn ink-reaction btn-floating-action btn-primary"><i class="fas fa-print"></i> </a>-->
+                                                            </td>
+											</tr>
+			                            {% endfor %}
+                           	 	</tbody>
+                             </table>
+                    </div>
+             <br>
+
+                <br>  
+                {% if perms.persona.add_persona %}
+
+                <div class="row justify-content-center">
+  
+
+                          
+                      <div class="" id="container" data-url="{% url 'persona:chart_data' %}"></div>
+                       
+                      </div>  
+
+                {% else %}
+                {% endif%}
+
+
+      {% else %}
+
+<br>
+
+          <div class="row justify-content-center">
+                <h1 class="text-danger">Si estas aqui es un error. Reportalo con la administracion. </h1>
+        </div>
+
+                {% endif%}
+
+
+
+
+
+
+        
+  <script>
+    $.ajax({
+      url: $("#container").attr("data-url"),
+      dataType: 'json',
+      success: function (data) {
+        Highcharts.chart("container", data);
+      }
+    });
+  </script>
+
+
+{% endblock %}
+
+
+
+	{% block extra_js %}	
+
+   <script type="text/javascript" src="{% static 'js/jquery.js' %}" charset="UTF-8"></script>
+
+    <script src="{% static 'js/bootstrap.min.js' %}" charset="UTF-8"></script>
+
+    <script type="text/javascript" src="{% static 'js/jquery-ui.js' %}"></script>
+  <link rel="stylesheet" type="text/css" href="{% static 'css/jquery.dataTables.min.css'  %}"/>
+        <script src="{% static 'js/jquery.dataTables.min.js' %}"></script>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" crossorigin="anonymous" />
+
+
+  
+
+<script src="https://code.highcharts.com/modules/series-label.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+
+			<script >
+			$(document).ready(function()
+					{
+					    var table = $('#tabla').dataTable( {
+					        "language": {
+					        	url: "/static/localizacion/es_ES.json"
+					        }
+				    } );
+			});
+			</script>
+	{% endblock %}

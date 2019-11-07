@@ -1,0 +1,102 @@
+{% extends "donacion/base.html" %}
+{% load bootstrap4 %}
+{% load crispy_forms_tags %}
+
+
+{% block tittle %} Registro de nuevo Evento{% endblock %}
+{% block content %}
+
+        
+        <div class="row  justify-content-center p-4 ">
+
+
+            	<div class=" card border mb-3" style="max-width: 50rem;" >
+							 <div class="card-header">
+							   						 <div class="row ">
+							   						 	<div class="col-6">
+							   						 			 <h3 class="page-header text-primary">REGISTRO DE EVENTO :</h3>
+							   						 	</div>
+							          								
+							          								<div class="col-6 text-right">
+							          									
+							          									<a data-toggle="tooltip" data-placement="top" title="retornar" href="{% url 'programa:programas' %}" class="btn bold ink-reaction btn-floating-action btn-danger">Retornar </a>
+							          								</div>
+							          				</div>
+							      </div>
+     			            
+		            <div class="card-body">
+		            
+		                <form class="form-group" role="form" action="#" method="post">
+		                
+		                    {% csrf_token %}
+		                   <div class="row">
+					                    						    	<div class="col-lg-6 col-md-6">
+					                    						    		{{form.evento|as_crispy_field}}
+					                    						    	</div>
+					                    						    	<div class="col-lg-6 col-md-6">
+					                    						    		{{form.persona|as_crispy_field}}
+					                    						    	</div>	
+					                    						    	<div class="col-lg-6 col-md-6">
+					                    						    		{{form.fecha_programa|as_crispy_field}}
+					                    						    		  {% for error in form.fecha_programa.errors %}
+
+										                                               <p class="text-danger"><strong>Ya existe un programa con esta fecha.</strong></p> 
+										                                            
+
+			                                        						{% endfor %}
+					                    						   		 </div>					    	
+		                    						 
+		                    						    	
+					                    						   		 <div class="col-lg-6 col-md-6">
+					                    						    		{{form.fecha_culminacion|as_crispy_field}}
+					                    						    		 {% for error in form.fecha_culminacion.errors %}
+
+										                                               <p class="text-danger"><strong>{{ error }}</strong></p> 
+										                                            
+
+			                                        						{% endfor %}
+					                    						    	</div>
+					                    						    	
+		                    						    	</div>
+
+
+		                   <div class="row">
+					                    						    	<div class="col-lg-12 col-md-12">
+					                    						    		{{form.direccion|as_crispy_field}}
+					                    						    	</div>
+					                    						    	<div class="col-lg-12 col-md-12">
+					                    						    		{{form.estado|as_crispy_field}}
+					                    						    	</div>
+					                    						    	<div class="col-lg-12 col-md-12 col-sm-12">
+					                    						    		
+					                    						    		{{form.nombre|as_crispy_field}}
+					                    						    	</div>	
+					                    						    	
+		                    						    	</div> 						    	
+		                   <div class="row justify-content-center"> 						    
+						    <div class="col-6">
+						    	<button type="submit"  class="btn btn-block btn-primary">Registrar</button>
+						   </div>						    
+						   
+						</div>
+		                </form>           
+		            </div>
+		            
+		        </div>
+		</div>
+
+
+ 
+   
+     
+{% endblock content %}
+
+{% block footer%}
+{% endblock%}
+
+
+ 
+{% block js %}
+ 
+
+{% endblock js %}

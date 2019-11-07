@@ -1,0 +1,143 @@
+{% extends "donacion/base.html"%}
+{% load staticfiles %}
+
+
+
+{% block tittle %} Estadisticas por Genero de Voluntarios{% endblock %}4
+]
+
+
+{% block content %}
+{% if perms.persona %} 
+
+
+<div class="col-6 tools d-print-none text-left">
+  
+  <a data-toggle="tooltip" data-placement="top" title="retornar" href="{% url 'persona:personas' %}" class="btn bold ink-reaction btn-floating-action btn-info"><i class="fas fa-undo"></i> </a>
+<div class="btn  ">
+                                            <a class="btn btn-floating-action btn-primary" href="javascript:void(0);" onclick="javascript:window.print();"><i class="fas fa-print"></i></a>
+                                          
+                                          </div>
+</div>
+                              <br>
+<div class="row">
+  <div class="col-12">
+    <div  class="card">
+
+  <div  class="card-body">
+    
+
+      <br><br><br><br>
+        
+          <div id="container"></div>
+
+        
+
+
+
+  </div>
+  
+</div>
+  </div>
+
+
+
+
+
+  <div class="col-12">
+    
+
+    <div  class="card">
+
+  <div  class="card-body">
+    
+
+      <br><br><br>
+        
+          <div id="container2"></div>
+
+        
+
+
+
+  </div>
+  
+</div>
+  </div>
+
+
+</div>
+  {% else %}
+
+<br>
+
+          <div class="row justify-content-center">
+                <h1 class="text-danger">Si estas aqui es un error. Reportalo con la administracion. </h1>
+        </div>
+
+                {% endif%}
+
+
+{% endblock %}
+
+
+
+  {% block extra_js %}
+<script src="https://code.highcharts.com/highcharts.src.js"></script>
+<script src="https://code.highcharts.com/modules/series-label.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+
+<script  ></script>
+<script type="text/javascript" charset="utf-8" async >
+  Highcharts.chart('container', {
+      chart: {
+          type: 'column'
+      },
+      title: {
+          text: 'Cantidad de personas por Genero(diagrama de columnas)'
+      },
+      xAxis: {
+          categories: ['GENERO']
+      },
+      series: [{
+          name: 'Hombres',
+          data: [{{hombre_s|safe}}],
+          color: 'lightgreen'
+      }, 
+      {
+          name: 'Mujeres',
+          data: [{{mujer_s}}],
+          color: 'orange',
+      }]
+  });
+</script>
+
+
+
+<script type="text/javascript" charset="utf-8" async >
+  Highcharts.chart('container2', {
+      chart: {
+          type: 'bar'
+      },
+      title: {
+          text: 'Diagrama de barras'
+      },
+      xAxis: {
+          categories: ['GENERO']
+      },
+      series: [{
+          name: 'Hombres',
+          data: [{{hombre_s|safe}}],
+          color: 'brown'
+      }, 
+      {
+          name: 'Mujeres',
+          data: [{{mujer_s}}],
+          color: 'blue',
+      }]
+  });
+</script>
+{% endblock%}
+
+{% block footer%}
+{% endblock%}

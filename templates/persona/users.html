@@ -1,0 +1,287 @@
+
+{% extends "donacion/base.html" %}
+{% load staticfiles %}
+{% load bootstrap4 %}
+
+{% block tittle %} Listado User{% endblock %}
+{% block content %}
+ {% if perms.persona %}  
+ 
+
+
+ <div class="row-lg-12 text-center">
+              {% if msgu   %}
+
+
+                        <div class=" alert alert-success alert-dismissible col-lg-12 col-md-12 col-sm-12 h-25 text-center" height="10px">
+                              <button type="button" class="close" data-dismiss="alert">&times;</button>
+                          <b class=" "><h4>{{ msgu }}</h4></b>
+                          </div>
+                      {% else %}
+                        
+                      {% endif %}
+     </div>
+
+ <div class="row-lg-12 text-center">
+              {% if msgeli   %}
+
+
+                        <div class=" alert alert-success alert-dismissible col-lg-12 col-md-12 col-sm-12 h-25 text-center" height="10px">
+                              <button type="button" class="close" data-dismiss="alert">&times;</button>
+                          <b class=" "><h4>{{ msgeli }}</h4></b>
+                          </div>
+                      {% else %}
+                        
+                      {% endif %}
+     </div>
+
+
+
+<div class="card border rounded">
+                              
+    
+    <div class="card-body">
+<div class="col-lg-12 col-sm-12 col-md-12">
+    <div class=" text-center">
+        <b> <h3 class=" border rounded  text-light p-2 " id="content">MODULO DE USUARIOS</h3></b>
+       
+    </div>
+
+   
+    		
+</div>
+
+
+
+</div>
+</div>
+  <!-- code here to list the books -->
+  <br>
+                   <div class="row pt-2">
+      <div class="col-12">
+        <form action="" class="form-group  pb-2">
+      
+          <div  class="col-12 text-left pb-4">
+          
+            <input type="text" class="border-primary rounded" name="query" value="{{query}}"  placeholder="Buscador.." />
+            <input type="submit" class="btn btn-platzi" value="Consultar"  />
+            
+          </div>
+          </form>
+      </div>
+      
+          
+        </div>
+
+
+  
+                    <div class="row">                 
+                        <div class="col-lg-4 col-md-4  col-sm-12  text-lg-left   text-md-left text-sm-center text-primary pb-2">    
+                              
+                            <p class="h4 text-uppercase">{{usuaris.count }} Usuario{{usuaris|pluralize}}</p>
+
+
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4 text-center justify-content-md-center  text-sm-center">
+                             
+
+
+                        </div> 
+                         <div class="col-lg-4 col-md-4 col-sm-4 text-lg-right   text-md-right text-sm-center">    
+                               
+                            <a id="add_id_persona" href="{% url 'persona:signup2' %}" class="btn btn-platzi "> 
+                                <span class="fas fa-plus-circle"> Usuario/Personal</span>
+                            </a>
+
+
+
+                        </div>   
+                                                
+                    </div>
+                    <br>
+                    {% if usuarios %}
+                    <section id="speakers" class="mt-4">
+                      <div class="container">
+                        
+                               {% for profile in usuarios %}
+
+                                  <div class="row">
+                                    <div class="col-12 mb-4">
+                                      <div class="card  border border-secondary" >
+                                    <div class="card-header bg-white">
+
+                                       <div class="row">
+                                                         <div class="col-5 text-left text-secondary text-uppercase">
+                                                            {% if profile.usuar %}<label class="text-success font-weight-bold">Estudiante</label>{% else %}<label class="text-success font-weight-bold">Usuario</label> {% endif %} 
+                                                            
+                                                                                                                </div>
+                                                        <div class="col-5 text-left text-secondary text-uppercase">
+                                                            
+                                                            {% if profile.created %} <label class="text-success font-weight-bold">Inscrito</label>
+                                                            ( {{profile.created}} )
+                                                              {% else %} 
+                                                                 
+                                                            {% endif %} 
+                                                                                                                </div>
+
+
+                                                             <div class="col-2 text-right ">
+                                                               <a href="{% url 'persona:delete' profile.id %}" class="btn ink-reaction btn-floating-action btn-danger "><i class="fas fa-trash-alt"></i> </a>
+
+
+                                                                               </div>
+
+                                                       </div>
+                                      
+
+                                <div class="row">
+                                      {% if profile.imagen %}
+                                      
+                                            <div class="col-2"><img    src="{{MEDIA_URL}}{{ profile.imagen.url }}" style=" width: 80px; height: 80px;
+
+                                                       border-radius: 80px; border: 3px solid #1A5276;" />
+                                                     
+                                                       
+
+
+                                                      </div>
+                                                           
+                                                                             
+
+                                                    {%else%}
+                                                    
+                                                    <div class="col-2 "><img   src="{% static 'img/default-profile.png' %}" style=" width: 80px; height: 80px;
+
+                                                        border-radius:100px; border: 3px solid #1A5276;" />
+
+                                                      </div>
+                                                            
+                                                      
+                                                      
+                                                    {%endif%}
+                              
+                                                    <div class="col-4 text-left">
+                                              <strong class="text-primary text-uppercase">Nombres:</strong> <br><p class="font-weight-bold">{{profile.nombres}}</p>
+                                            </div>
+                                            <div class="col-4 text-left">
+                                               <strong class="text-primary text-uppercase">Apellidos:</strong> <br><p class="font-weight-bold">{{profile.apellidos}}</p>
+                                            </div>
+
+                                          </div>
+                                          <div class="row">
+                                            <div class="col-2 text-left pt-4">
+                                            <a href="{% url 'persona:editar_user' profile.id %}" class="btn ink-reaction btn-floating-action btn-secondary"><i class="fas fa-edit"></i> </a>
+                                          
+                                        </div>
+                                            <div class="col-4 text-left">
+                                              <strong class="text-primary text-uppercase">Correo:</strong> <br><p class="font-weight-bold">{{profile.email}}</p>
+                                            </div>
+                                            <div class="col-4 text-left">
+                                               <strong class="text-primary text-uppercase">Telefono:</strong> <br><p class="font-weight-bold">{{profile.celular}}</p>
+                                            </div>
+                                              
+                                                       
+                                                </div>
+                                                <div class="row"> 
+                                                    <div  class="col-2">
+                                                      
+                                                    </div>
+                                                    <div class="col-10 text-left">
+                                            <strong class="text-primary text-uppercase">Ultimo inicio de sesion:</strong> <br><p class="font-weight-bold">{% if profile.last_login == None %}(<label  class="text-danger"> No ah iniciado sesion.</label>)
+                                                              {% else %} 
+                                                                ({{profile.last_login}})  
+                                                            {% endif %}</p>
+                                          
+                                        </div>
+                                                   
+                                                </div>  
+
+                                                   
+                                        </div>
+
+                                              
+
+                                    </div>
+
+                               
+
+
+                                   
+                                  </div>
+                                      
+                                    </div>
+                                  
+                                  
+
+                    {% endfor %}
+                  </div>
+                       <div class="row justify-content-center">
+                    
+                    
+                  <nav aria-label="Page navigation example">
+             <ul class="pagination ">
+                {% if usuarios.has_previous %}<li class="page-item"><a class="page-link" href="?page={{usuarios.previous_page_number}}&query={{ query }}">Anterior</a></li>{% endif %}
+                <li class="page-item"><a class="page-link" >Página {{ usuarios.number }} de {{ usuarios.paginator.num_pages }}</a></li>
+               
+                {% if usuarios.has_next %}<li class="page-item"><a class="page-link" href="?page={{usuarios.next_page_number}}&query={{ query }}">Siguiente</a></li>{% endif %}
+              </ul>
+            </nav>
+        </div>
+
+
+                        
+                      
+
+                      
+                    </section>
+                    
+                    {% else %}
+                     <div class="row justify-content-center">
+                      <h1 class="text-uppercase text-primary"> 
+                       No se encuentra el usuaruio.
+                       </h1>
+                  </div>
+                    {% endif %}
+
+
+
+                 
+
+
+   {% else %}
+
+<br>
+
+          <div class="row justify-content-center">
+                <h1 class="text-danger">Si estas aqui es un error. Reportalo con la administracion. </h1>
+        </div>
+
+                {% endif%}
+
+
+
+
+
+
+
+
+
+
+{% endblock %}
+
+
+
+
+	{% block extra_js %}	
+
+			<script >
+			$(document).ready(function()
+					{
+					    var table = $('#tabla').dataTable( {
+					        "language": {
+					        	url: "/static/localizacion/es_ES.json"
+					        }
+				    } );
+			});
+			</script>
+	{% endblock %}

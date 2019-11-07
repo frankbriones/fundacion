@@ -1,0 +1,19 @@
+
+{% load i18n %}
+{% load staticfiles %}
+<p>Welcome @{{ user.nombres }}!</p>
+
+<p>
+    Antes de inicar a usar <b>Tacita Caliente</b> necesitamos que hagas una última cosa.<br>
+    
+    Visite el siguiente enlace <a href="http://127.0.0.1:8000/API/activate/"  >link</a> e ingrese este código
+
+</p>
+
+<p style="text-align:center">
+    <code style="text-align:center">
+        { 
+        	"token": "{{ token }}"
+        }
+    </code>
+</p>

@@ -1,0 +1,100 @@
+
+{% extends "donacion/base.html" %}
+{{  form.media }}
+{% load crispy_forms_tags %}
+
+{% load bootstrap4 %}
+
+
+
+
+{% block tittle %} Registro de Estudiante{% endblock %}
+{% block content %}
+
+    		
+{% if perms.donacion %}
+	   {% if form.errors %}
+         <div class="alert alert-danger">
+             
+        <p class="font-weight-bold ">
+            Passwords no coinciden. {{request.user}}
+        </p>
+         </div>
+    {% endif%}
+<div class="row justify-content-center">
+
+		<div class=" card border mb-3" style="max-width: 50rem;" >
+ 		<div class="card-header">
+
+   						 <div class="row ">
+				       			<div class="col-lg-8 col-md-12">
+				       				<h3 class=" text-primary ">REGISTRO DE ESTUDIANTE</h3>
+				       			</div>
+				       			
+								<div class="col-lg-4	 col-md-12 text-right">
+				       				 <a class="btn  btn-danger" href="{% url 'tallers:taller' %}" type="" > Retornar</a> 
+						      
+				       			</div>
+				       		</div>
+				  </div>
+			<br>
+        <div class="card-body">
+		                <form  id="form" class="form-group" role="form" action="#" method="post">		                
+		                    {% csrf_token %}
+								<div class="row">
+		                    						      <div class="col-lg-6 col-md-6 text-dark">
+		                    						        {{ form.email|as_crispy_field }}
+		                    						      </div>
+		                    						      <div class="col-lg-6 col-md-6">
+		                    						        {{ form.nombres|as_crispy_field }}
+		                    						      </div>   
+		                    </div>
+		                    <div class="row">
+		                    						      
+		                    						      <div class="col-lg-6 col-md-6">
+		                    						        {{ form.apellidos|as_crispy_field }}
+		                    						      </div> 
+		                    						         <div class="col-lg-6 col-md-6 text-dark">
+		                    						        {{ form.celular|as_crispy_field }}
+		                    						      </div>  
+		                    </div>
+		                    <div class="row">
+		                    						      <div class="col-lg-12 text-dark">
+		                    						        {{ form.password|as_crispy_field }}
+		                    						      </div>
+		                    						      <div class="col-lg-12">
+		                    						        {{ form.password_confirmation|as_crispy_field }}
+		                    						      </div> 
+		                    </div>
+		                   
+						    	<br>
+
+						    			<div class="row justify-content-center">
+						   		<div class="col-4 text-center">
+    								<button type="submit"  class="btn btn-block btn-primary" ><i class="fas fa-plus text-white"></i> Registrar</button>
+    							</div>		
+    					</div>
+						  </form>
+		            </div>
+		        </div>
+		    </div>
+ 	
+{% else %}
+<br>
+<h3>   <strong> 
+No tienes Acceso -- {{request.user}}</strong> </h3>
+{% endif %}
+
+
+
+{% endblock  %}
+ 
+
+
+{% block footer%}
+{% endblock%}
+
+ 
+{% block js %}
+
+{% endblock js %}

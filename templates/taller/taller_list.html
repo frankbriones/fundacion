@@ -1,0 +1,394 @@
+{% extends "donacion/base.html" %}
+{% load staticfiles %}
+{% load bootstrap4 %}
+
+
+{% block tittle %} Modulo de Talleres{% endblock %}
+
+{% block static %}
+<style  >
+  #taller {
+    animation-name: animacionTaller;
+    animation-duration: 1000ms;
+    animation-iteration-count: 1;
+    position: relative;
+   }
+   
+   @keyframes animacionTaller{
+    from{
+        opacity: 0;
+    }
+    to{
+        opacity: 1;
+    }
+   }
+</style>
+{% endblock %}
+
+{% block content %}
+{%  if perms.talleres.change_taller %} 
+
+ <div class="row-lg-12 text-center" >
+            {% if msgt   %}
+          <div class=" alert alert-primary alert-dismissible col-lg-12 col-md-12 col-sm-12 h-25">
+                  <button type="button" class="close" data-dismiss="alert">&times;</button>
+              <b class=" "><p>{{ msgt }}</p></b>
+              </div>
+        {% endif %}
+     </div>
+
+
+     <div class="row-lg-12 text-center">
+            {% if msge   %}
+          <div class=" alert alert-primary alert-dismissible col-lg-12 col-md-12 col-sm-12 h-25">
+                  <button type="button" class="close" data-dismiss="alert">&times;</button>
+              <b class=" "><p>{{ msge }}</p></b>
+              </div>
+        {% endif %}
+     </div>
+
+
+<div class="card" id="taller">
+	<div class="row ">
+    <div class="col-12 text-center">
+        <b> <h3 class="border rounded text-light p-2 " id="content" >MODULO DE TALLERES&nbsp;{{date}} </h3></b>
+       
+    </div>
+ </div>
+                                
+        
+    <div class="card-body ">
+
+    	<div class="row">
+    		<div class="col-12 pb-4 pt-4">
+    			<div class="row justify-content-center">
+  				<p class="text-uppercase h4 text-primary">
+  					Talleres en proceso. {{ tallers.count}}
+  				</p>
+  			</div>
+    		</div>
+    			
+<br>
+
+    		<div class="col-12 pb-4 pt-4">
+
+  				   <div class="row" >                 
+                        <div class="col-lg-4 col-md-4 col-sm-12 text-center pt-2">    
+                                                          
+                                                                <a id="crear_detalle" href="{% url 'tallers:nuevo_estudiante' %}" class="btn btn-platzi " data-toggle="tooltip" data-placement="top" title="Nuevo Estudiante">
+	                                								<span class="fas fa-user-graduate "> Agregar</span>
+	                            								</a>                          
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-12 text-center pt-2">
+                             <a id="crear_detalle" href="{% url 'talleres:nuevo_taller' %}" class="btn btn-platzi "  data-toggle="tooltip" data-placement="top" title="Registrar Nuevo Taller">
+                                <span class="fas fa-calendar-plus"> Taller</span>
+                            </a>
+                            
+
+	                            
+                           
+                            
+                        </div> 
+                         <div class="col-lg-4 col-md-4 col-sm-12 text-center pt-2">    
+                             
+                               <a id="crear_detalle" href="{% url 'tallers:estudiantes' %}" class="btn btn-platzi "  data-toggle="tooltip" data-placement="top" title="Listado de Estudiantes">
+                                <span class="fas fa-users"> Estudiantes</span>
+                            </a>
+                            
+
+	                                                                                 
+                        </div>   
+                                                
+                    </div>
+                
+
+    			
+    		</div>
+  			
+
+    	</div>
+		
+	</div>
+</div>
+
+
+  <!-- code here to list the books -->
+    <!-- code here to list the books -->
+  			
+                <br>
+
+             <!-- Button to Open the Modal -->
+
+
+
+
+<div class="row">
+  <div class="col-12 text-uppercase text-light">
+    <a href="{% url 'talleres:realizados' %}" title="Talleres realizados" class="text-dark font-weight-bold btn btn-outline-success">Talleres Ejecutados.</a>
+  </div>
+</div>
+
+  			<br>  
+  		
+                    <br>
+                
+ 		
+                     <div class="justify-content-md-center "><br>
+                        <table id="tabla" class="table table-hover  table-responsive-lg table-responsive-md table-responsive-sm" cellspacing="0" width="100%">
+		                            <thead class="">
+		                            	<div class="row justify-content-center"> <H4>LISTADO DE TALLERES ACTIVOS</H4></div>
+		                                <tr class="">
+		                                    
+		                                    
+		                                    <th class="text-center ">DESCRIPCION</th> 
+		                                    <th class="text-center">FECHA INICIO</th>
+		                                    <th class="text-center">FECHA FIN</th>
+		                                    <th class="text-center">CAPACITADOR</th>
+		                                    <th class="text-center ">ESTADO</th>
+		                                    <th class="text-center">ACCIONES</th>                                  
+		                                </tr>
+		                            </thead>
+                            	<tbody class="text-dark">
+			                            {% for taller in tallers %}
+			                                <tr>
+			                                    
+			                                    <td class="text-center"><strong class="text-uppercase">  {{ taller.descripcion }}</strong>  </td>
+			                                    <td class="text-center"><strong>{{ taller.fecha_inicio }}</strong> </td>
+			                                    <td class="text-center"><strong>{{ taller.fecha_culmina }}</strong> </td>
+			                                    <td class="text-center"><strong>{{ taller.persona.nombres }} {{ taller.persona.apellido_paterno }} </strong> </td>
+			                                    {% if user.usuar %}
+                                           <td class="text-center ">{{ taller.get_estado_display }}</td>
+                                          {% else %}
+			                                    	{% if taller.estado == 0 %}
+			                                    		<td class="text-center "><a class="btn btn-info text-light btn-block " value="" href="{% url 'tallers:inactivar_taller' taller.id %}">
+                                          
+                                          
+			                                    {{ taller.get_estado_display }}</a></td>
+			                                    {% else %}
+									<td class="text-center "><a class="btn btn-danger text-light btn-block hidden " value="" href="{% url 'tallers:activar_taller' taller.id %}">
+			                                    {{ taller.get_estado_display }}</td>
+			                                    {% endif%}
+
+                                        {% endif %}
+
+												<td class="text-center">
+                                                                <a href="{% url 'talleres:edit' taller.id %}" class="btn ink-reaction btn-floating-action btn-secondary" data-toggle="tooltip" data-placement="top" title="Detalles de Taller" ><i class="fas fa-eye"></i> </a>
+                                                               
+	                            						
+
+	                            							 <a  href="{% url 'tallers:reporte_estudiantes_pdf' taller.id  %}" class="btn ink-reaction btn-floating-action btn-primary" data-toggle="tooltip" data-placement="top" title="Imprimir Listado de Estudiantes" ><i class="fas fa-file"   ></i> </a>
+                                                             
+                                                                
+                                                            </td>
+											</tr>
+			                            {% endfor %}
+                           	 	</tbody>
+                             </table>
+                    </div>
+
+                    <br>  
+
+
+
+
+<div class="row justify-content-center">
+	
+<div class="col-12">
+    <div  class="card">
+
+  <div  class="card-body">
+    
+
+      <br><br><br>
+        
+        <div class="" id="container" data-url="{% url 'tallers:chart_data' %}">
+	
+
+
+        
+
+
+
+  </div>
+  
+</div>
+  </div>
+
+	
+</div>
+</div>
+
+
+
+
+
+ <script>
+		    $.ajax({
+		      url: $("#container").attr("data-url"),
+		      dataType: 'json',
+		      success: function (data) {
+		        Highcharts.chart("container", data);
+		      }
+		    });
+  </script>
+
+
+ 
+{% else %}
+
+
+
+
+
+
+
+<!--lo que podra ver el usuario de talleres (estudiante)-->
+ 
+        <div class="col-12 pb-4 pt-4">
+
+             <div class="row" >                 
+                        <div class="col-lg-4 col-md-4 col-sm-12 text-left pt-2">    
+                                                                    
+                             <a id="crear_detalle" href="{% url 'talleres:nuevo_taller' %}" class="btn btn-platzi "  data-toggle="tooltip" data-placement="top" title="Registrar Nuevo Taller">
+                                <span class="fas fa-calendar-plus"> Taller</span>
+                            </a>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-12 text-center pt-2">
+                            
+
+                              
+                           
+                            
+                        </div> 
+                         <div class="col-lg-4 col-md-4 col-sm-12 text-right pt-2">    
+                             
+                               <div class="row">
+  <div class="col-12 text-uppercase text-light">
+    <a href="{% url 'talleres:realizados' %}" title="" class="text-light font-weight-bold btn btn-platzi">Antiguos Talleres.</a>
+  </div>
+</div>                                                    
+                        </div>   
+                                                
+                    </div>
+                
+
+          
+        </div>
+        
+		       
+		
+
+<br>
+
+		    	<div class="row justify-content-center">
+								<h1 class="text-success">Bienvenido, eres un Docente y Estudiante de la Fundacion.	</h1>
+				</div>
+
+         <div class="justify-content-md-center "><br>
+                        <table id="tabla" class="table  table-hover  table-responsive-lg table-responsive-md table-responsive-sm" cellspacing="0" width="100%">
+                                <thead class="">
+                                  <div class="row justify-content-center"> <H4>LISTADO DE TALLERES RELACIONADOS A SU PERFIL</H4></div>
+                                    <tr class="">
+                                        
+                                        
+                                        <th class="text-center ">DESCRIPCION</th> 
+                                        <th class="text-center">FECHA INICIO</th>
+                                        <th class="text-center">FECHA FIN</th>
+                                        
+                                        <th class="text-center">ACCIONES</th>                                  
+                                    </tr>
+                                </thead>
+                              <tbody class="text-dark">
+                                  {% for taller in queryset2 %}
+                                      <tr>
+                                  {% if taller.persona.correo == user.email %}
+                                          
+                                          <td class="text-center"><strong class="text-uppercase">  {{ taller.descripcion }}</strong>  </td>
+                                          <td class="text-center"><strong>{{ taller.fecha_inicio }}</strong> </td>
+                                          <td class="text-center"><strong>{{ taller.fecha_culmina }}</strong> </td>
+                                          
+                        <td class="text-center">
+                                                                <a href="{% url 'talleres:edit' taller.id %}" class="btn ink-reaction btn-floating-action btn-secondary" data-toggle="tooltip" data-placement="top" title="Detalles de Taller" ><i class="fas fa-eye"></i> </a>
+                                                {% if taller.estado == 0 %}               
+                                           <a  href="{% url 'tallers:reporte_estudiantes_pdf' taller.id  %}" class="btn ink-reaction btn-floating-action btn-primary" data-toggle="tooltip" data-placement="top" title="Imprimir Listado de Estudiantes" ><i class="fas fa-file"   ></i> </a>
+                                                            {% endif %}
+                                                                
+
+                                                            </td>
+                      
+                      </tr>
+                    {% endif %}
+                                  {% endfor %}
+                              </tbody>
+                             </table>
+                    </div>
+
+
+				
+				
+
+
+
+
+
+
+
+
+
+
+
+
+{% endif %}
+
+
+
+
+{% endblock %}
+
+
+
+
+
+
+	{% block extra_js %}
+
+    <script type="text/javascript" src="{% static 'js/jquery.js' %}" charset="UTF-8"></script>
+
+    <script src="{% static 'js/bootstrap.min.js' %}" charset="UTF-8"></script>
+
+    <script type="text/javascript" src="{% static 'js/jquery-ui.js' %}"></script>
+  <link rel="stylesheet" type="text/css" href="{% static 'css/jquery.dataTables.min.css'  %}"/>
+        <script src="{% static 'js/jquery.dataTables.min.js' %}"></script>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" crossorigin="anonymous" />
+
+
+	
+	<script src="https://code.highcharts.com/modules/series-label.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+
+
+			<script >
+			$(document).ready(function()
+					{
+					    var table = $('#tabla').dataTable( {
+					        "language": {
+					        	url: "/static/localizacion/es_ES.json"
+					        }
+				    } );
+			});
+		
+      $(document).ready(function()
+          {
+              var table2 = $('#tabla2').dataTable( {
+                  "language": {
+                    url: "/static/localizacion/es_ES.json"
+                  }
+            } );
+      });
+      </script>
+
+ 
+
+
+
+	{% endblock %}

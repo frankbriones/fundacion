@@ -1,0 +1,251 @@
+{% extends "donacion/base.html" %}
+{% load bootstrap4 %}
+
+
+
+{% block tittle %} Detalle de Taller{% endblock %}
+{% block content %}
+
+		
+
+{% if perms.talleres.view_taller %}
+
+    <div class="row justify-content-center">
+    								<button  onclick="goBack()" title="retornar" href="" class="btn bold ink-reaction btn-floating-action btn-info">Retornar </button >
+    							</div>
+    							{% else %}
+    							<div class="row justify-content-center">
+    								<a data-toggle="tooltip" data-placement="top" title="retornar" href="{% url 'website:talleres' user.id %}" class="btn bold ink-reaction btn-floating-action btn-info">Retornar </a>
+    							</div>
+    							{% endif %}
+    							<br>
+        
+ <div class="container-fluid ">
+            	    
+        		<h3 class="page-header text-primary">DETALLES DEL TALLER ({{ taller.get_categoria_display}})</h3>
+        		<hr class="mt-0 mb-4">
+
+
+   
+   
+			<div class="card">
+				<div class="card-head pt-4">
+						    <div class="col-lg-12 text-uppercase">
+						            
+						            	  <div class="row">
+									            <div class="col-4 text-center">
+												    <b  class="">Descripcion:</b>
+												    <p ><b class="text-info">{{  taller.descripcion}}</b></p>
+													<br>
+												</div>
+												    <div class="col-4 text-center">
+													             <b class="">CAPACITADOR:</b>	<br>
+													             <p ><b class="text-info">{{ taller.persona.nombres }} {{ taller.persona.apellido_paterno }}</b></p>
+													             <br>
+												             </div>
+												    <div class="col-4 text-center">
+													             <b class="">HORARIO:</b>	<br>
+													             <p ><b class="text-info">{{ taller.horario }}</b></p>
+													             <br>
+												             </div>
+							         		</div>
+
+						            
+						            <div class="row">
+									            <div class="col-4 text-center">
+												    <b  class="">Estado:</b>	<br>
+													             <p >{% if taller.estado == 0 %}<b class="text-info ">{{  taller.get_estado_display }}</b>{% else %}<b class="text-danger ">{{  taller.get_estado_display }}</b>{% endif %}</p>
+													             <br>
+													            </div>
+													            <div class="col-4 text-center">
+													             <b  class="">Fecha que se Realiza:</b>	<br>
+													             <p ><b class="text-info ">{{ taller.fecha_inicio }}</b></p>
+													             <br>
+												             </div>
+												             <div class="col-4 text-center">
+													             <b  class="">Precio:</b>	<br>
+													             {% if taller.precio == NONE  or taller.precio == 0  %}
+													             <h2 class="text-danger"> <strong>GRATIS</strong></h2>
+													             {% else %}
+													             <p ><b class="text-info "> <i class="fas fa-dollar-sign">	</i>{{ taller.precio }}</b></p>
+													             {% endif %}
+													             <br>
+												             </div>
+
+							         			</div>
+
+							           <div class="row">
+									            <div class="col-4 text-center">
+												    <b  class="">Limite / Estudiantes:</b>	<br>
+													             <p ><b class="text-info">{{  taller.limite }}</b></p>
+													             <br>
+													            </div>
+						    			</div>
+								</div>
+				</div>
+				<div class="card-body">
+							         			
+							         			
+							         				
+
+				   					{% if estudiantes  %}
+				   							
+											<div class="row">
+								         			<div class=' col-12 text-center text-secondary'>
+								         				<h2 >Estudiantes</h2>
+								         			</div>
+							         			</div>
+							         			<div class="container-fluid">
+							         					<table id="tabla"  cellspacing="0" width="100%"  class="table  table-responsive-lg table-responsive-md table-responsive-sm">
+						                            <thead>
+						                                
+						                                    
+						                                    <th class="text-center " width="20%">NOMBRE</th>
+						                                    <th class="text-center " width="20%">APELLIDOS</th>
+						                                    		                                 
+						                                    <th class="text-center" width="20%">TELEFONO</th>
+						                                    <th class="text-center" width="20%">ESTADO</th>
+						                                    <th class="text-center" width="20%">CONDICION</th>
+						                                    <th class="text-center" width="40%">ACCIONES</th>
+						                                 
+						                            </thead>
+				                            	<tbody>
+				                            		
+							                            {% for estudiante in estudiantes %}
+							                                <tr>
+							                                	
+							                                    <td class="text-center">{{ estudiante.estudiante.usuario.nombres}}</td>
+							                                    <td class="text-center">{{estudiante.estudiante.usuario.apellidos}} </td>
+																
+																<td class="text-center">{{ estudiante.estudiante.usuario.celular }}</td>
+															<td class="text-center">
+																	{% if estudiante.estado  ==   1 or estudiante.estado == 0 %}
+
+				                                                      	<h5><span class="badge btn-outline-light" style="background: #0aa89e;">  {{ estudiante.get_estado_display }}</span></h5>
+				                                                       {% else  %}
+
+				                                                         <h5><span class="badge btn-outline-light" style="background: red;">  {{ estudiante.get_estado_display }}</span></h5>
+				                                                     
+				                                                        
+
+				                                                      {% endif %}
+
+
+				                                                </td>
+				                                                <td class="text-center">
+
+				                                                	{% if estudiante.pago == 1 %}
+				                                                	<h5><span class="badge btn-outline-light" style="background: #0aa89e;"> {{estudiante.get_pago_display}}</span></h5>
+				                                                	{% else  %}
+				                                                		
+				                                                	<h5><span class="badge btn-outline-light text-dark" style="background: #ccfd33;"> PAGO VERIFICADO</span></h5>
+				                                                		
+				                                                	{% endif %}
+				                                                </td>
+
+
+												{% if estudiante.pago == 1 and estudiante.estado == 0 %}
+												 <td>
+												 	{% if perms.talleres.change_taller  %}
+				                                                	<a href="{% url 'tallers:verificar_pago' estudiante.id %}"   ><i data-toggle="tooltip" data-placement="top" title="VERIFICAR PAGO" class="fas fa-check"></i></a>
+				                                                		{% else %}
+				                                                		<label for="" class="text-danger">X</label>
+				                                                		
+				                                                		{% endif %}
+												 	
+												 </td>
+	                                             {% else %}
+													<td class="text-center">
+
+													 {% if estudiante.estado  ==   0  %}  
+
+														 			<a href="{% url 'tallers:estado1_estudiante' estudiante.id  %}" class="btn ink-reaction btn-floating-action btn-primary" data-toggle="tooltip" data-placement="top" title="APROBADO" ><i class="fas fa-check"></i> </a>
+
+	                                                          {% elif estudiante.estado  ==   2  %}
+
+				                                                         
+	                                                                RETIRADO
+
+	                                                           {% elif estudiante.estado  ==   1  %}
+
+	                                                                APROBADO
+				                                                {% endif %}
+
+	                                                       {% if estudiante.estado  ==   0 %}         
+	                                                                <a id="crear_detalle" href="{% url 'tallers:estado2_estudiante' estudiante.id %}" class="btn btn-danger " data-toggle="tooltip" data-placement="top" title="ABANDONO">
+		                                								<span class="fas fa-times "></span>
+		                            								</a>
+		                            								 {% else  %}
+
+				                                                        
+
+				                                                      {% endif %}
+
+
+	                                                                
+	                                                 </td>
+
+	                                             {% endif %}
+
+				                                               
+
+				                                            </tr>
+				                                            
+				                                            	
+				                                            	
+				                                            
+							                            {% endfor %}
+							                       
+
+							                            
+				                           	 	</tbody>
+				                           	 	
+				                             </table>			
+
+							         			</div>
+
+				                        
+
+				 						{% else %}
+												<div class="row ">
+								         			<div class=' col-12 text-center text-danger '>
+								         				<h3 class="pt-4" >No existen Estudiantes en el taller de {{ taller.persona.nombres }} :( </h3>
+								         			</div>
+							         			</div>
+
+				                         	         				
+											{% endif %}
+
+
+
+												   
+
+						            </div>
+						            
+						        </div>
+
+
+		
+
+
+</div>
+		    
+	
+   
+
+{% endblock %}
+
+
+
+{% block footer%}
+{% endblock%}
+
+
+
+{% block extra_js %}
+<script>
+function goBack() {
+  window.history.back();
+}
+</script>
+{% endblock%}

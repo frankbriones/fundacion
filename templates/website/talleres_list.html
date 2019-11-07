@@ -1,0 +1,316 @@
+{% extends "website/inicio.html" %}
+
+{{  form.media }}
+{% load crispy_forms_tags %}
+{% load bootstrap4 %}
+{% load staticfiles %}
+{% if is_authenticated %}
+{% block tittle %} <title> TALLERES DISPONIBLES </title>{% endblock %}
+{% block banner %}
+		{% block corusel %}Bienvenido a los Talleres que se realizan en la Fundacion Tacita Caliente.<br>
+		<p class="h6 text-warning">	(Se recuerda a los estudiantes que los pagos se realizan en las instalaciones de la Fundacion, antes de recibir el taller. Para la asistencia del mismo.)</p>
+		{% endblock %}
+
+{% endblock %}
+
+{% block nav %}
+
+<nav class="navbar navbar-expand-lg   navbar-dark bg-dark fixed-top "id="mainNav">
+  <div class="container ">    
+          <a href ="/" class="navbar-brand js-scroll-trigger "  ><h2 class="text-warning"> <li class="fas fa-mug-hot"></li> Fundacion</h2>
+               </a>
+        <button class="navbar-toggler navbar-toggler-right text-uppercase font-weight-bold  text-white rounded" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item mx-0 mx-lg-1">
+              <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="{% url 'website:inicio' %}">Inicio</span></a>
+            </li>
+            
+           <!--  -->
+  
+            <li class="menu__item  nav-item mx-0 mx-lg-1 ">
+              <div class="dropdown  ">
+                      <button class="btn btn-outline-dark nav-link  nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger  dropdown-toggle text-platzi" role="button"  id="dropdownMenuLink"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        FUNDACION <li class="fas fa-coffee"></li>
+                      </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                      <a class="dropdown-item" href="{% url 'website:talleres'  %}">CONOCE NUESTROS TALLERES</a>
+                    
+                      <a class="dropdown-item" href="{% url 'website:nuevo_voluntario' %}">REGISTRO DE VOLUNTARIADO</a>
+
+                      
+                      
+                      
+                      {% if user.is_authenticated %}
+                      <a class="dropdown-item pb-2 text-light " id="content" href="{% url 'persona:logout' %}">SALIR !</a>
+                      {% else %}
+                      
+                      {% endif %}
+                    </div>
+              </div>
+            </li>&nbsp;
+          </ul>
+          
+        </div>
+        
+      </div>
+       
+</nav>
+
+
+{% endblock %}
+{% block content %}
+{% if msg %}	<div class="container-fluid">
+	<div class="row justify-content-lg-center ">
+																	    <p class="alert alert-success text-center h5 font-weight-bold text-uppercase ">{{msg}}</p>
+																	   
+																	</div>
+	
+</div>
+																	
+									{% endif %}
+
+{% if msgE %}	<div class="container-fluid">
+	<div class="row justify-content-center ">
+																	    <p class="alert alert-danger text-center h3 font-weight-bold text-uppercase ">{{msgE}}</p>
+																	   
+																	</div>
+	
+</div>
+																	
+									{% endif %}
+
+	<br><br>
+	{% if talleres  %}
+								
+        <div class="container">
+
+            	
+				
+				<div class="row  justify-content-center">
+					<div class="col-8 align-self-center">
+						
+						
+					
+
+		   		    
+            			{% for taller in talleres %}
+            						<div class="card bg-info mb-4" style="max-width: 50rem;">
+											  <div class="card-header text-center ">
+											   
+			  									 <h4><strong class=" text-light  " style="font: oblique bold 120%; -webkit-text-stroke: 2px black;
+			  									color: white;">{% if perms.talleres.change_taller %}<div class="row"><div class="col-12"><a href="{{taller.get_absolute_url}}" title="" class="btn btn-block btn-platzi ">{{ taller.descripcion }}</a></div></div>{% else %}{{ taller.descripcion }} {% endif %}</strong></h4>
+			  									
+											  </div>
+								  <!-- https://htmlcolorcodes.com/es/tabla-de-colores/tabla-de-colores-diseno-plano/-->
+								  <div class="card-body " style="background-color: #ffffff;">
+									<div class="row">
+
+												  			<div class="col-lg-4 col-md-4 col-sm-6 text-left">
+												  			
+
+						                	{% if taller.persona.imagen %}
+				                        			<img src="{{ MEDIA_URL }}{{ taller.persona.imagen.url }}" class="img-thumbnail" width="100%" height="100%" />
+				                    		{% else%}
+				                        			<img src="{% static 'img/default-profile.png' %}" class="img-thumbnail" width="80%" height="80%" />
+				                    		{% endif %}
+
+								  		</div>
+								  		
+
+
+
+								  		<div class="col-lg-8 col-md-8 col-sm-6">
+								  			<h5 class="card-title " style="color: #9B59B6;"><strong class="text-dark">CAPACITADOR : </strong>{{taller.persona.nombres}} {{taller.persona.apellido_paterno}}</h5>
+										    <p class="card-text"><strong>DESCRIPCION DEL TALLER :</strong> {{taller.detalle}}</p>
+										    <br>
+										    <p class="card-text"><strong>FECHA QUE EMPIEZA :</strong> {{taller.fecha_inicio}}</p>
+										    <p class="card-text"><strong>CATEGORIA :</strong><strong class="text-primary"  style="font: bold 120% cursive; -webkit-text-stroke: 2px black;
+
+  									color: white;"> {{taller.get_categoria_display}} </strong> </p>
+  									<div class="row justify-content-center">
+  										{% if taller.precio == NONE or taller.precio == 0 	%}
+													             <h4 class="text-danger"> <strong>GRATUITO</strong></h4>
+													             {% else %}
+													             <h4 ><b class="text-info "> Precio: <i class="fas fa-dollar-sign">	</i>{{ taller.precio }}</b></h4>
+													             {% endif %}
+  									</div>	
+  											
+  											
+
+  									{% if user.is_authenticated %} 
+  										{%  if perms.talleres.view_taller %}
+  										{% else %} 			
+
+
+										   <a id="boton" href="{% url 'website:estudiante_t' taller.id %}" class="btn btn-primary text-light" >INSCRIBIRTE AHORA</a>
+										 {% endif %}
+										  
+               						{% else %}
+                
+                    						<a href="{% url 'website:nuevo_estudiante' %}" class="btn btn-primary text-light">
+                        						<i class="fas fa-sign-in-alt text-white"> Registrate</i>
+                    						</a>
+               		  				 {% endif %}
+								  		</div>
+
+								  		
+								  			
+
+								  	</div>
+								    
+
+								  </div>
+								</div>
+							
+
+						{% endfor %}
+					</div>
+					</div>
+				</div>
+
+
+		       {%  else %}
+
+		       {% if messages %}
+										<ul class="messages">
+										    {% for message in messages %}
+										    <li{% if message.tags %} class="{{ message.tags }} alert alert-success "{% endif %}>{{message}}</li>
+										    {% endfor %}
+										</ul>
+									{% endif %}
+		       
+		       		<div	class="col-12 text-center align-items-center">
+		       			<div	class="card card-block">
+		       				<div	class="card-body text-center">
+		       						<h3 class="text-info"> NO TIENES TALLERES PARA INSCRIBIRTE	</h3>
+		       					
+		       				</div>
+		       				
+		       			</div>
+		       			
+		       		</div>
+		      
+		       {% endif %}
+		</br></br>
+							
+ 
+{% if talleres %}
+		   
+		    
+				<div class="container-fluid">
+					
+				<div class="row justify-content-center">
+									<nav aria-label="Page navigation example">
+						 <ul class="pagination ">
+						    {% if talleres.has_previous %}<li class="page-item"><a class="page-link" href="?page={{talleres.previous_page_number}}&query={{ query }}">Anterior</a></li>{% endif %}
+						    <li class="page-item"><a class="page-link" >Página {{ talleres.number }} de {{ talleres.paginator.num_pages }}</a></li>
+						   
+						    {% if talleres.has_next %}<li class="page-item"><a class="page-link" href="?page={{talleres.next_page_number}}&query={{ query }}">Siguiente</a></li>{% endif %}
+						  </ul>
+						</nav>
+				</div>
+				</div>
+{%else%}
+{% endif %}
+				
+			
+
+		
+		
+
+		</div>
+
+
+	</div>
+
+
+
+		
+
+
+
+
+<!--
+		<script	> 
+			var modal;
+				function abrir_modal(url, titulo)
+{
+    modal = $('#popup').dialog(
+    {
+        title: titulo,
+        modal: true,
+        width: 500,
+        resizable: true
+    }).dialog('open').load(url)
+}
+
+				function cerrar_modal()
+				{
+				        $('#popup').modal('hide');
+				        return false;
+				}
+
+
+		</script>
+-->
+     
+
+{% endblock content %}
+
+ {% else %}
+
+ no
+
+ {% endif %}
+
+
+
+{% block comentario %}
+{% endblock %}
+
+
+
+
+
+
+
+{% block js %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/jquery-ui.css' %}">
+    <script type="text/javascript" src="{% static 'js/jquery.js' %}" charset="UTF-8"></script>
+    <script type="text/javascript" src="{% static 'js/jquery-ui.js' %}"></script>
+
+	<link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}" />
+   
+    
+<script  type="text/javascript" charset="utf-8" async defer>
+	
+
+$("#boton").on("click",function(){
+  swal({
+  title: 'Alerta con cierre automatico!',
+  text: 'Inscrito en Taller.',
+  timer: 2000
+}).then(
+  function () {},
+  // handling the promise rejection
+  function (dismiss) {
+    if (dismiss === 'timer') {
+      console.log('La alerta fue cerrada en 2 segundos')
+      //Aqui puedes hacer tu redireccion
+      //location.href = "http://es.stackoverflow.com";
+    }
+  }
+)
+})
+
+
+</script>
+
+   
+    
+  
+{% endblock js %}

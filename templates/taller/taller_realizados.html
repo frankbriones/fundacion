@@ -1,0 +1,256 @@
+{% extends "donacion/base.html" %}
+{% load staticfiles %}
+{% load bootstrap4 %}
+
+
+{% block tittle %}Talleres Realizados por la Fundacion.{% endblock %}
+
+{% block static %}
+<style  >
+  #taller {
+    animation-name: animacionTaller;
+    animation-duration: 1000ms;
+    animation-iteration-count: 1;
+    position: relative;
+   }
+   
+   @keyframes animacionTaller{
+    from{
+        opacity: 0;
+    }
+    to{
+        opacity: 1;
+    }
+   }
+</style>
+{% endblock %}
+
+{% block content %}
+{%  if perms.talleres.add_taller %} 
+
+ <div class="row-lg-12 text-center" >
+            {% if msgt   %}
+          <div class=" alert alert-primary alert-dismissible col-lg-12 col-md-12 col-sm-12 h-25">
+                  <button type="button" class="close" data-dismiss="alert">&times;</button>
+              <b class=" "><p>{{ msgt }}</p></b>
+              </div>
+        {% endif %}
+     </div>
+
+
+     <div class="row-lg-12 text-center">
+            {% if msge   %}
+          <div class=" alert alert-primary alert-dismissible col-lg-12 col-md-12 col-sm-12 h-25">
+                  <button type="button" class="close" data-dismiss="alert">&times;</button>
+              <b class=" "><p>{{ msge }}</p></b>
+              </div>
+        {% endif %}
+     </div>
+
+
+<div class="card" id="taller">
+	<div class="row ">
+    <div class="col-12 text-center">
+        <b> <h3 class="border rounded text-light p-2 " id="content" >TALLERES REALIZADOS POR LA FUNDACION </h3></b>
+       
+    </div>
+ </div>
+                                
+        
+    <div class="card-body ">
+
+    	<div class="row">
+    		<div class="col-12 pb-4 pt-4">
+    			
+    <a href="{% url 'talleres:taller' %}" title="" class="text-dark font-weight-bold btn btn-outline-success">Retornar.</a>
+    		</div>
+    			
+<br>
+
+    		<div class="col-12 pb-4 pt-4">
+
+  				   
+    						<div class="justify-content-md-center "><br>
+                        <table id="tabla" class="table table-hover   table-responsive-lg table-responsive-md table-responsive-sm" cellspacing="0" width="100%">
+		                            <thead class="">
+		                            	<div class="row justify-content-center"> <H4>LISTADO DE TALLERES EJECUTADOS</H4></div>
+		                                <tr class="">
+		                                    
+		                                    <th class="text-center ">CATEGORIA</th>
+		                                    <th class="text-center ">DESCRIPCION</th> 
+		                                    <th class="text-center">FECHA INICIO</th>
+		                                    <th class="text-center">FECHA FIN</th>
+		                                    <th class="text-center">CAPACITADOR</th>
+		                                                                     
+		                                </tr>
+		                            </thead>
+                            	<tbody class="text-dark">
+			                            {% for taller in talleres %}
+			                                <tr>
+			                                    <td colspan="" rowspan="" headers="">{{ taller.get_categoria_display }}</td>
+			                                    <td class="text-center"><strong class="text-uppercase">  {{ taller.descripcion }}</strong>  </td>
+			                                    <td class="text-center"><strong>{{ taller.fecha_inicio }}</strong> </td>
+			                                    <td class="text-center"><strong>{{ taller.fecha_culmina }}</strong> </td>
+			                                    <td class="text-center"><strong>{{ taller.persona.nombres }} {{ taller.persona.apellido_paterno }} </strong> </td>
+			                                   
+
+												
+											</tr>
+			                            {% endfor %}
+                           	 	</tbody>
+                             </table>
+                    </div>
+
+    			
+    		</div>
+  			
+
+    	</div>
+		
+	</div>
+</div>
+
+
+  <!-- code here to list the books -->
+    <!-- code here to list the books -->
+  			
+                <br>
+
+             <!-- Button to Open the Modal -->
+
+
+
+
+
+  			<br>  
+  		
+                    <br>
+                
+ 		
+                     
+                    <br>  
+
+
+
+
+<div class="row justify-content-center">
+	
+<div class="col-12">
+    <div  class="card">
+
+  <div  class="card-body">
+    
+
+      <br><br><br>
+        
+        <div class="" id="container" data-url="{% url 'tallers:chart_data_realizados' %}">
+	
+
+
+        
+
+
+
+  </div>
+  
+</div>
+  </div>
+
+	
+</div>
+</div>
+
+
+
+
+
+ <script>
+		    $.ajax({
+		      url: $("#container").attr("data-url"),
+		      dataType: 'json',
+		      success: function (data) {
+		        Highcharts.chart("container", data);
+		      }
+		    });
+  </script>
+
+
+ 
+{% else %}
+
+
+
+
+
+
+
+<!--lo que podra ver el usuario de talleres (estudiante)-->
+ 
+		       
+		
+
+<br>
+
+		    	<div class="row justify-content-center">
+								<h1 class="text-danger">Si estas aqui es un error. Reportalo con la administracion.	</h1>
+				</div>
+
+				
+				
+
+
+
+
+
+
+
+
+
+
+
+
+{% endif %}
+
+
+
+
+{% endblock %}
+
+
+
+
+
+
+	{% block extra_js %}
+
+    <script type="text/javascript" src="{% static 'js/jquery.js' %}" charset="UTF-8"></script>
+
+    <script src="{% static 'js/bootstrap.min.js' %}" charset="UTF-8"></script>
+
+    <script type="text/javascript" src="{% static 'js/jquery-ui.js' %}"></script>
+  <link rel="stylesheet" type="text/css" href="{% static 'css/jquery.dataTables.min.css'  %}"/>
+        <script src="{% static 'js/jquery.dataTables.min.js' %}"></script>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" crossorigin="anonymous" />
+
+
+	
+	<script src="https://code.highcharts.com/modules/series-label.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+
+
+			<script >
+			$(document).ready(function()
+					{
+					    var table = $('#tabla').dataTable( {
+					        "language": {
+					        	url: "/static/localizacion/es_ES.json"
+					        }
+				    } );
+			});
+			</script>
+
+ 
+
+
+
+	{% endblock %}

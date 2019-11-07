@@ -1,0 +1,133 @@
+
+{% extends "donacion/base.html" %}
+{% load staticfiles %}
+{% load bootstrap4 %}
+
+
+{% block tittle %} Capacitadores Activos{% endblock %}
+{% block content %}
+
+
+
+<div class="col-lg-12">
+  <div class="row-lg-12 text-center">
+              {% if msg   %}
+
+
+                        <div class=" alert alert-danger alert-dismissible col-lg-12 col-md-12 col-sm-12 h-25 text-center" height="10px">
+                              <button type="button" class="close" data-dismiss="alert">&times;</button>
+                          <b class=" "><h4>{{ msg }}</h4></b>
+                          </div>
+                     
+                      {% endif %}
+     </div>
+     
+  <div  class="card">
+              <div  class="card-body">
+         <div class="row-lg-12 text-center">
+        <b> <h3 class="border rounded text-light p-2 " id="content" >LISTADO DE CAPACITADORES ACTIVOS</h3></b>
+       
+    </div>
+      </div>
+  </div>
+    
+   
+
+      
+  
+</div>
+
+  <!-- code here to list the books -->
+    
+                <br>
+                    <div class="row justify-content-center">                 
+                        <div class="col-lg-4 col-md-4 col-sm-4 text-center">    
+                                      <a data-toggle="tooltip" data-placement="top" title="Retornar"  href="{% url 'persona:personas' %}" class="btn btn-info">
+                                <i class="fas fa-undo-alt"></i>
+                            </a>                          
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4 text-center     ">
+                             
+                            
+                        </div> 
+                         <div class="col-lg-4 col-md-4 col-sm-4 text-center">    
+                                 <a href="{% url 'persona:list_capacitador_inactivos' %}" class="btn btn-info ">
+                                <strong><i class="fas fa-frown-open "> INACTIVOS LISTA</i></strong>
+                            </a>                                                  
+                        </div>   
+                                                
+                    </div>
+                    <br>
+                
+    
+                     <div class="container text-center " id="auth-container ">
+                        <table id="tabla" class="table   table-responsive-lg table-responsive-md table-responsive-sm" cellspacing="0" width="100%">
+                                <thead class="">
+                                    <tr class="">
+                                        
+                                        <th class="text-center " width="30%">FOTO</th>
+                                        <th class="text-center " width="20%">NOMBRES</th> 
+                                        <th class="text-center" width="20%">APELLIDOS</th>
+                                        
+                                        <th class="text-center" width="40%">CORREO</th>
+                                        
+                                        <th class="text-center" width="20%">ACCIONES</th>                                  
+                                    </tr>
+                                </thead>
+                              <tbody>
+                                  {% for persona in personas %}
+                                      <tr>
+                                          <td ><div class="col-lg-6 container justify-content-lg-center">{% if persona.imagen %}<img class="img  "  src="{{ persona.imagen.url }}" style=" width: 90px; height: 60px;
+                                          border-radius:100px; border: 3px solid #1A5276;" />{% else%}
+                        <img src="{% static 'img/default-profile.png' %}" class="img-thumbnail" width="80%" height="80%" />
+                    {% endif %}
+                  </div></td>
+                                          <td class="text-uppercase"><a data-toggle="tooltip" data-placement="top" title="Talleres del Capacitador" class="btn  btn-platzi " href="{% url 'persona:talleres_list' persona.id %}" >{{ persona.nombres }}</a>  </td>
+                                          <td class="text-center">{{ persona.apellido_paterno }} {{ persona.apellido_materno }} </td>
+                                          
+                                          <td class="text-center">{{ persona.correo }}</td>
+                       
+                        <td class="text-center">
+                                                                <a href="{% url 'persona:persona_inactiva' persona.id %}" class="btn ink-reaction btn-floating-action btn-danger text-light" data-toggle="tooltip" data-placement="top" title="QUITAR DE LISTA" ><i class="fas fa-times"></i> </a>
+                                                                
+                                                               
+
+                                                                
+                                                 </td>
+
+
+
+                      </tr>
+                                  {% endfor %}
+                              </tbody>
+                             </table>
+                    </div>
+             <br>
+
+                <br>  
+ 
+
+
+{% endblock %}
+
+
+
+
+
+
+
+{% block footer%}
+{% endblock%}
+
+  {% block extra_js %}  
+      <script >
+      $(document).ready(function()
+          {
+              var table = $('#tabla').dataTable( {
+                  "language": {
+                    url: "/static/localizacion/es_ES.json"
+                  }
+            } );
+      });
+      </script>
+  {% endblock %}

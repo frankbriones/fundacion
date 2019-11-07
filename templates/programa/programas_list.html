@@ -1,0 +1,122 @@
+
+{% extends "donacion/base.html" %}
+{% load staticfiles %}
+{% load bootstrap4 %}
+
+
+
+{% block tittle %} Programas Activos{% endblock %}
+{% block content %}
+{% if perms.programa %}
+<div class="card col-lg-12 pt-2">
+    <div class="row-lg-12 text-center">
+        <b> <h3 class="border rounded text-light p-2 " id="content">LISTADO DE PROGRAMAS ACTIVOS</h3></b>
+       
+    </div>
+
+    <div class="row-lg-12 text-center">
+           
+     </div>
+    
+    
+  
+</div>
+
+  <!-- code here to list the books -->
+    
+                <br>
+                    <div class="row justify-content-center">                 
+                        <div class="col-lg-4 col-md-4 col-sm-4 text-center">    
+                                   <a data-toggle="tooltip" data-placement="top" title="Retornar"  href="{% url 'programa:programas' %}" class="btn btn-info">
+                                <i class="fas fa-undo-alt"></i>
+                                 </a>      
+                            </a>                          
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4 text-center     ">
+                               
+                            
+                        </div> 
+                         <div class="col-lg-4 col-md-4 col-sm-4 text-center">    
+                              
+                                     <a data-toggle="tooltip" data-placement="top" title="Retornar"  href="{% url 'programa:evento' %}" class="btn btn-info">
+                                <i class="fas fa-plus"> Agregar</i>
+                                 </a>     
+                                                               
+                        </div>   
+                                                
+                    </div>
+                    <br>
+                
+    
+                     <div class="container text-center " id="auth-container ">
+                        <table id="tabla" class="table   table-responsive-lg table-responsive-md table-responsive-sm" cellspacing="0" width="100%">
+                                <thead class="">
+                                    <tr class="">
+                                        
+                                        <th class="text-center " width="20%">DESCRIPCION</th> 
+                                        <th class="text-center" width="40%">ENCARGADO</th>
+
+                                        <th class="text-center" width="20%">TELEFONO</th>
+                                        
+                                        <th class="text-center" width="20%">ESTADO</th>
+                                        
+                                        <th class="text-center" width="20%">ACCIONES</th>                                  
+                                    </tr>
+                                </thead>
+                              <tbody>
+                                  {% for evento in eventos %}
+                                      <tr>
+                                          <td class="text-center">{{ evento.nombre }}  </td>
+                                          <td class="text-center">{{ evento.persona }} {{ evento.persona.apellido_materno }} </td>
+
+                                          <td class="text-center">{{ evento.persona.celular }}  </td>
+
+                                          
+                                          <td class="text-center">{{ evento.get_estado_display }}</td>
+                       
+                        <td class="text-center">
+                                                                <a href="{% url 'programa:inactivar_evento' evento.id %}" class="btn ink-reaction btn-floating-action btn-danger text-light" data-toggle="tooltip" data-placement="top" title="QUITAR DE LISTA" ><i class="fas fa-times"></i> </a>
+                                                                
+                                                               
+
+                                                                
+                                                 </td>
+
+
+
+                      </tr>
+                                  {% endfor %}
+                              </tbody>
+                             </table>
+                    </div>
+
+
+                    {% else %}
+No tienes acceso
+
+                    {% endif %}
+             <br>
+
+                <br>  
+ 
+
+
+{% endblock %}
+
+
+{% block footer%}
+{% endblock%}
+
+
+  {% block extra_js %}  
+      <script >
+      $(document).ready(function()
+          {
+              var table = $('#tabla').dataTable( {
+                  "language": {
+                    url: "/static/localizacion/es_ES.json"
+                  }
+            } );
+      });
+      </script>
+  {% endblock %}

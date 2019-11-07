@@ -1,0 +1,79 @@
+{% extends "donacion/base.html" %}
+{% load staticfiles %}
+{% load bootstrap4 %}
+
+{% load crispy_forms_tags %}
+
+{% block tittle %}Resgistro de Nuevo Usuario{% endblock %}
+{% block content %}
+   <div class="row  justify-content-center ">
+
+            <div class=" col-md-10	  col-lg-6  col-sm-10 p-4 " >
+
+            	<div class=" card border mb-3" style="max-width: 50rem;" >
+            						                                              {% if messages %}
+										<ul class="messages">
+										    {% for message in messages %}
+										    <li{% if message.tags %} class="{{ message.tags }} alert alert-success "{% endif %}>{{message}}</li>
+										    {% endfor %}
+										</ul>
+									{% endif %}
+							 <div class="card-header">
+							   						 <div class="row ">
+							   						 	<div class="col-12 text-center">
+							   						 			 <h3 class="page-header text-primary">NUEVO USUARIO</h3>
+							   						 	</div>
+							          								
+							          				</div>
+							      </div>
+									<div class="card-body">
+													
+											    <form action="{% url 'persona:signup' %}" method="POST" enctype="multipart/form-data">
+											        {% csrf_token %}
+											       <!-- {% bootstrap_form form  %}-->
+											       <div class="row">
+					                    						    	<div class="col-lg-12 col-md-12">
+					                    						    		{{form.nombres|as_crispy_field}}
+					                    						    	</div>
+					                    						    	<div class="col-lg-12 col-md-12">
+					                    						    		{{form.apellidos|as_crispy_field}}
+					                    						    	</div>	
+					                    						    	<div class="col-lg-12 col-md-12">
+					                    						    		{{form.email|as_crispy_field}}
+					                    						    		 
+					                    						   		 </div>					    	
+		                    						 
+		                    						    	
+					                    						   		 <div class="col-lg-12 col-md-12">
+					                    						    		{{form.password|as_crispy_field}}
+					                    						    	
+					                    						    	</div>
+					                    						    	
+					                    						    	 <div class="col-lg-12 col-md-12">
+					                    						    		{{form.celular|as_crispy_field}}
+					                    						    		 
+					                    						    	</div>
+					                    						    	
+		                    						    	</div>
+											    	<div class="row justify-content-center">
+											    		<div class="col-4">
+											    			<button class="btn btn-primary btn-block mt-5" type="submit"><i class="fas fa-plus"></i> Registrar</button>
+											    		</div>
+											    	</div>
+											        
+											    </form>
+											
+
+												</div>
+	
+</div>
+</div>
+
+
+
+{% endblock %}
+
+
+{% block footer %}
+
+{% endblock %}

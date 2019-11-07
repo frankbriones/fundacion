@@ -1,0 +1,246 @@
+{% extends "donacion/base.html" %}
+{{  form.media }}
+{% load crispy_forms_tags %}
+
+{% load staticfiles %}
+
+
+
+{% block tittle %} Ingresar Productos{% endblock %}
+{% block content %}
+ <body >
+ 	{% if msg   %}
+
+
+						    				<div class=" alert alert-success alert-dismissible col-lg-12 col-md-12 col-sm-12 h-25 text-center" height="10px">
+						    							<button type="button" class="close" data-dismiss="alert">&times;</button>
+													<b class=" "><h4>{{ msg }}</h4></b>
+													</div>
+							 				{% else %}
+												
+											{% endif %}
+		
+    <div class="container h-100">
+        
+        <div class="row  justify-content-center ">
+            <div class=" col-md-8	col-sm-12  col-lg-12 p-4 " >
+    
+        <h3 class="page-header text-primary"><div class="col-12 text-center">AGREGAR PRODUCTO A LA DONACION DE</div>
+        <div class="col-12 text-center">{{ donacion.persona.nombres }} {{ donacion.persona.apellido_paterno }} - {{ donacion.created }}</div>
+    	</h3>
+        <hr class="mt-0 mb-4">
+   
+   
+
+		<div class="row">
+		    <div class="col-lg-12">
+		        <div class="panel panel-default p-4"id="auth-container"">
+		            
+		            <div class="panel-body">
+		            
+		                <form class="form-group" role="form" action="#" method="post">
+		                
+		                    {% csrf_token %}
+		                      <!-- {% for error in form.errors %}
+											                <div class="alert alert-danger">
+											                    <b>Atencion</b> La fecha Expiracion, no puede ser menor o igual a la fecha actual.
+											                </div>
+											                {% endfor %}
+
+
+											            -->
+		                    <div class="row">
+						      <div class="col-12 mt-1 mb-4 ">
+						        
+						        {{form.tipo|as_crispy_field}}
+						        
+						      </div>
+						    </div>
+						    <div class="row">
+						      <div class="col-6 " >
+						        {{ form.categoria|as_crispy_field }}
+						      </div>
+						      <div class="col-6 " >
+						        {{ form.descripcion|as_crispy_field }}
+						      </div>
+						      
+						    </div>
+						    	 	<div class="row">				    	
+						    	<div class="col-6">
+						    		
+						    		{{form.fecha_expiracion|as_crispy_field}}
+						    		
+						    	</div>
+
+						    	
+						    	<div class="col-6">
+						    		
+						    		{{form.cantidad|as_crispy_field}}
+
+						    	</div>
+						   </div>
+
+						   	<div class="row">
+						   		<div class="col-4">
+    								<button type="submit"  class="btn btn-primary" ><i class="fas fa-plus text-white"></i> Agregar</button>
+    							</div>
+    							<div class="col-4"></div>
+    							<div class="col-lg-4 col-md-4 col-sm-4 text-right">    
+                                     <a href="{% url 'donacion:donaciones' %}" class="btn btn-success text-white" ><i class="fas fa-undo-alt"></i> Listo
+    					
+                            </a>                          
+                        </div>
+    							<div class="col-4 text-right ">
+    								</div>
+    							  
+						    </div>
+						  </form> 
+						  
+						
+						  {% if productos  %}
+   							
+							<div class="row">
+				         			<div class=' col-12 text-center text-secondary'>
+				         				<h2 >Productos</h2>
+				         			</div>
+			         			</div>
+
+
+
+		             <table id="tabla" class="table table-responsive-lg table-responsive-md table-responsive-sm">
+		                            <thead>
+		                                <tr class="">
+		                                    
+		                                    <th class="text-center ">DESCRIPCION</th> 
+		                                    <th class="text-center">TIPO</th>		                                    
+		                                    <th class="text-center">FECHA EXPIRACION</th>
+		                                    <th class="text-center">CATEGORIA</th>
+		                                    <th class="text-center">CANTIDAD</th>
+		                                    
+		                                 </tr>
+		                            </thead>
+                            	<tbody>
+
+			                            {% for producto in productos %}
+			                                <tr>
+			                                    
+			                                    <td class="text-center">{{producto.descripcion}}</td>
+												<td class="text-center">{{ producto.tipo.nombre }}</td>
+												
+												
+														<td class="text-center">{{ producto.fecha_expiracion }}</td>
+														<td class="text-center">{{ producto.categoria }}</td>
+
+
+												<td class="text-center">{{ producto.cantidad }}</td>
+												
+                                               
+
+                                            </tr>
+                                            
+                                            	
+                                            	
+                                            
+			                            {% endfor %}
+
+			                            
+                           	 	</tbody>
+                           	 	<tfoot>
+									   
+									  </tfoot>
+                             </table>
+                             {% else %}
+								
+<div class="row justify-content-center" ><h4><b>No existe registro de Productos en esta donacion...	</b>	</h4>		</div>
+							{% endif %}
+
+
+		            </div>
+		            
+		        </div>
+		    </div>
+		</div>
+
+   </div>
+   </div>
+   
+   </div>
+     
+</body>
+{% endblock content %}
+ 
+
+{% block footer%}
+{% endblock%}
+
+
+ 
+{% block extra_js %}
+
+
+
+ <script>
+
+
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie != '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = jQuery.trim(cookies[i]);
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+
+
+function getCategoria(tipo_id, url){
+    $.ajaxSetup({
+        headers: { "X-CSRFToken": getCookie("csrftoken") }
+    });
+    $.ajax({
+    method: "POST",
+    url: "{% url 'donacion:categoriasAsJson'  %}",
+    data: { tipo_id: tipo_id}
+  }).done(function( respuesta ) {
+        $("#id_categoria").empty()
+
+        $.each( respuesta, function( index, value )
+        {
+            $('#id_categoria').append('<option value="'+value.id+'">'+value.categoria+'</option>')
+        });
+       
+  });
+ }
+
+
+
+
+
+
+
+
+
+ 
+
+
+</script>
+
+
+  <script>
+
+
+        $('#id_fecha_expiracion').datepicker({
+       locale: 'es-es',
+        format: 'yyyy-mm-dd'
+    });
+    </script>
+
+
+{% endblock extra_js %}

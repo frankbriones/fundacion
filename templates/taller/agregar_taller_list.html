@@ -1,0 +1,184 @@
+{% extends "donacion/base.html" %}
+{% load staticfiles %}
+{% load bootstrap4 %}
+
+
+{% block tittle %} Talleres Disponibles{% endblock %}
+
+
+
+
+{% block content2 %}
+
+
+
+<div class="card">
+                                 
+        
+    <div class="card-body">
+		<div class="col-lg-12">
+		    <div class="row-lg-12 text-center ">
+		        <b> <h3 class="border rounded  text-light p-2 " id="content" >LISTADO DE TALLERES DISPONIBLES</h3></b>
+		       
+		    </div>
+
+		    
+		</div>
+	</div>
+</div>
+<br>
+{% if msg5   %}
+<div class="row ">
+	<div class="col-12 text-uppercase text-center">
+			<div class=" alert alert-primary alert-dismissible pt-2 pb-2">
+                  <button type="button" class="close" data-dismiss="alert">&times;</button>
+              <b class=" "><p>{{ msg5 }}</p></b>
+              </div>
+		
+	</div>
+</div>
+
+          
+{% endif %}
+
+
+  <!-- code here to list the books -->
+    <!-- code here to list the books -->
+  			
+             
+
+             <!-- Button to Open the Modal -->
+
+             <div class="row justify-content-center">
+	<p class="text-uppercase text-danger"> Para ver detalles y talleres del estudiante dar click en su nombre.</p>
+</div>
+
+
+
+
+  			<br>  
+  				   <div class="row">                 
+                        <div class="col-lg-2 col-md-2 col-sm-12 text-left text-sm-center	">    
+                                    <a id="crear_detalle" href="{% url 'talleres:estudiantes' %}" class="btn btn-info "  data-toggle="tooltip" data-placement="top" title="Estudiantes">
+                                <span class="fas fa-undo"></span>
+                            </a>                                                
+                        </div>
+                        <br><br><br>
+                        <div class="col-lg-5 col-md-5 col-sm-12 text-left  text-sm-center">
+                       
+                        		<strong>ESTUDIANTE : </strong ><h3  ><a href="{{ estudiante.get_absolute_url }}" class="badge badge-success text-light" title="">{{estudiante.usuario.nombres}} {{estudiante.usuario.apellidos}}</a></h3>
+                        
+                        </div> 
+
+                        <br><br><br>
+                         <div class="col-lg-5 col-md-5 col-sm-12 text-left text-sm-center ">
+                       
+                        		<strong>CORREO : </strong ><h3 class="text-info">{{estudiante.usuario.email}}</h3>
+                        
+                        </div>
+                        
+                        <br><br><br>
+                                                
+                    </div>
+                
+                    <br>
+                
+ 		
+                     <div class="justify-content-md-center ">
+                        <table id="tabla" class="table table-bordered  table-responsive-lg table-responsive-md table-responsive-sm" cellspacing="0" width="100%">
+		                            <thead class="">
+		                                <tr class="">
+		                                    
+		                                    
+		                                    <th class="text-center " width="20%">CATEGORIA</th> 
+		                                    <th class="text-center" width="25%">DESCRIPCION</th>
+		                                    <th class="text-center" width="25%">FECHA INICIO</th>
+		                                    <th class="text-center" width="30%">CAPACITADOR</th>
+		                                    <th class="text-center" width="30%">ACCION</th>
+
+		                                                                     
+		                                </tr>
+		                            </thead>
+                            	<tbody>
+
+                            			
+			                            
+			                                
+			                           				
+			                                		
+			                                	
+
+														
+
+													{% for taller in talleres %}
+
+													
+													<tr>
+
+							                                    <td class="text-center">{{ taller.get_categoria_display}}  </td>
+							                                    <td class="text-center">{{ taller.descripcion }} </td>
+							                                    <td class="text-center">{{ taller.fecha_inicio }} </td>
+							                                    <td class="text-center">
+							                                    	{{taller.persona.nombres }}{{taler.persona.apellido_paterno}}
+							                                    </td>
+							                                    <td class="text-center">
+							                                    	 <a href="{% url 'talleres:estudiante_taller' estudiante.id taller.id %}" class="btn ink-reaction btn-floating-action btn-primary badge-info" data-toggle="tooltip" data-placement="top" title="Agregar un Taller" ><i class="fas fa-plus"></i> </a>
+				                                                      
+
+
+							                                     </td>
+							                                 </tr>
+
+
+
+			                            			{% endfor %}
+
+											
+																
+							                                   
+			                            
+			                                     
+			                                    		
+                           	 	</tbody>
+                             </table>
+                    </div>
+
+                    <br>  
+
+
+
+
+
+
+
+
+
+
+{% endblock %}
+
+
+{% block footer%}
+{% endblock%}
+
+
+
+
+
+
+
+	{% block extra_js %}
+
+
+			<script >
+			$(document).ready(function()
+					{
+					    var table = $('#tabla').dataTable( {
+					        "language": {
+					        	url: "/static/localizacion/es_ES.json"
+					        }
+				    } );
+			});
+			</script>
+
+
+	{% endblock %}

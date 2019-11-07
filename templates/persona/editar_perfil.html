@@ -1,0 +1,155 @@
+{% extends "donacion/base.html" %}
+{{  form.media }}
+{% load crispy_forms_tags %}
+{% load bootstrap4 %}
+{% load staticfiles %}
+
+{% block tittle %} Editar Perfil de {{user.nombres}}{% endblock %}
+{% block content %}
+{% load staticfiles %}
+ 
+		 <div class="row justify-content-center">
+
+				<div class="container col-12  text-center  ">
+		                		{% if profile.imagen %}
+                        
+                    {% else%}
+                        <p class="alert alert-danger text-uppercase font-weight-bold">ingresa foto para tu perfil</p>
+                    {% endif %}
+
+		           
+			</div>
+
+			</div>
+    
+        <div class="row-lg-12 text-center">
+            {% if msg   %}
+          <div class=" alert alert-primary alert-dismissible col-lg-12 col-md-12 col-sm-12 h-25">
+                  <button type="button" class="close" data-dismiss="alert">&times;</button>
+              <b class=" "><p>{{ msg}}</p></b>
+              </div>
+        {% endif %}
+     </div>
+        <div class="row  justify-content-center ">
+            <div class=" col-md-12 col-sm-12  col-lg-12 p-4 "  >
+    
+        <h3 class="page-header text-primary ">EDICION DE PERFIL</h3>
+        			<hr class="mt-0 mb-4">
+   
+   
+
+		<div class="row">
+		    <div class="col-lg-12 col-md-12 col-sm-12">
+		        <div class="panel panel-default p-4 border border-success text-primary "id="auth-container">
+		            
+		            <div class="row justify-content-center">
+
+				<div class="container col-lg-3 col-md-3 col-sm-4 text-center  ">
+		                		{% if profile.imagen %}
+                        <img src="{{ MEDIA_URL }}{{ profile.imagen.url }}" class="img-thumbnail" width="100%" height="100%" />
+                    {% else%}
+                        <img src="{% static 'img/default-profile.png' %}" class="img-thumbnail" width="80%" height="80%" />
+                    {% endif %}
+
+		           
+			</div>
+
+			</div>
+		                <br>
+
+		                <div class="row  justify-content-center">
+		                	
+
+
+		                    			
+
+		                <form class="form-group" name="formacedula"  action="" method="POST" enctype="multipart/form-data">
+		                   {% csrf_token %}
+		                   <div class="row-lg-12 text-center">
+		                   <h4 class="border rounded text-light pt-2" id="content" >DATOS PERSONALES</h4>
+		               </div>
+		                <div class="row">
+		                    						      <div class="col-lg-6 col-md-6 col-sm-6">
+		                    						        {{ form.email|as_crispy_field }}
+		                    						      </div>
+		                    						      <div class="col-lg-6 col-md-6">
+		                    						        {{ form.nombres|as_crispy_field }}
+		                    						      </div>
+		                    
+		                  
+		                    						      <div class="col-lg-6 col-md-6">
+		                    						        {{ form.apellidos|as_crispy_field }}
+		                    						      </div>
+		                    						      <div class="col-lg-6 col-md-6">
+		                    						        {{ form.celular|as_crispy_field }}
+		                    						      </div>
+		                    
+		                   									
+		                    				</div>
+		                    				<div class="row-lg-12 text-center">
+		                   <h4 class="border rounded text-light pt-2" id="content" >IMAGEN</h4>
+		               </div>
+		                    				<div class="row">
+		                    						    	
+		                    						    		<div class="col-lg-12 col-md-12 col-sm-12 ">
+		                    						    		<div class="col-lg-12 col-md-12 col-sm-12 ">
+		                    						    		<div class="file-field " >
+																    <div class="btn  btn-sm float-left border rounded page-header  text-light" id="content">
+																      <span >Elije una Imagen</span>
+																      <input type="file"  name="imagen" class="btn btn-platzi"  />&nbsp;
+																     </div>
+																    
+																  </div>
+		                    						    	</div>
+		                    						    	</div>
+
+		                    						    </div>
+		                    						    <div class="row justify-content-center text-success"> 						    
+						    						    
+						  <strong class="strong">Imagenes solo formato .png/ .jpg y con un peso maximo de 2.5MB</strong>
+						</div>
+		                    						    
+		                    						   
+		                    						    
+		                    						    <br>
+		                   <div class="row justify-content-center"> 						    
+						    						    
+						   <button type="submit" class="btn btn-primary">Actualizar</button>
+						   &nbsp;&nbsp;&nbsp;&nbsp;
+						  <a data-toggle="tooltip" data-placement="top" title="retornar" href="{% url 'persona:update' %}" class="btn bold ink-reaction btn-floating-action btn-danger">Retornar </a>
+						</div>
+
+		                </form> 
+		           
+		                </div>          
+		           </div>
+		        </div>
+		    </div>
+		</div>
+	</div>
+
+		
+
+   
+
+     
+
+{% endblock content %}
+
+
+
+
+
+
+{% block footer%}
+{% endblock%}
+
+
+
+
+ 
+{% block js %}
+
+    
+  
+{% endblock js %}

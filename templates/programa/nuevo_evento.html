@@ -1,0 +1,63 @@
+{% extends "donacion/base.html" %}
+{% load bootstrap4 %}
+{% load crispy_forms_tags %}
+
+
+{% block tittle %} Registro de nuevo Evento{% endblock %}
+{% block content %}
+
+        
+        <div class="row  justify-content-center p-4 ">
+
+
+            	<div class=" card border mb-3" style="max-width: 50rem;" >
+							 <div class="card-header">
+							   						 <div class="row ">
+							   						 	<div class="col-6">
+							   						 			 <h3 class="page-header text-primary">REGISTRO DE PROGRAMA:</h3>
+							   						 	</div>
+							          								
+							          								<div class="col-6 text-right">
+							          									
+							          									<a data-toggle="tooltip" data-placement="top" title="retornar" href="{% url 'programa:lista_programas' %}" class="btn bold ink-reaction btn-floating-action btn-danger">Retornar </a>
+							          								</div>
+							          				</div>
+							      </div>
+     			            
+		            <div class="card-body">
+		           
+		                <form class="form-group" role="form" action="#" method="post">
+		                
+		                    {% csrf_token %}
+		                   					    	
+		                   {% bootstrap_form form  %}					    	
+		                   <div class="row justify-content-center"> 						    
+						    <div class="col-6">
+						    	<button type="submit"  class="btn btn-block btn-primary">Registrar</button>
+						   </div>						    
+						   
+						</div>
+		                </form>           
+		            </div>
+		            
+		        </div>
+		    
+		</div>
+
+
+ 
+   
+     
+{% endblock content %}
+
+
+{% block footer%}
+{% endblock%}
+
+
+
+ 
+{% block js %}
+ 
+
+{% endblock js %}

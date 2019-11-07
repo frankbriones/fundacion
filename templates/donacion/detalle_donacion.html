@@ -1,0 +1,148 @@
+{% extends "donacion/base.html" %}
+{% load bootstrap4 %}
+
+
+{% block tittle %} Detalle de donacion #{{donacion.id}}{% endblock %}
+{% block content %}
+ <body >
+		
+    
+        
+        <div class="row  justify-content-center ">
+            <div class=" col-md-12	col-sm-12  col-lg-10 p-4 " >
+            	    
+        <h3 class="page-header text-primary">DETALLE DE DONACION :</h3>
+        <div class="card-head">
+										
+												
+											
+														    
+										   &nbsp;&nbsp;&nbsp;&nbsp;
+										  <a data-toggle="tooltip" data-placement="top" title="retornar" href="{% url 'donacion:donaciones' %}" class="btn bold ink-reaction btn-floating-action btn-danger">Retornar </a>
+										
+									</div><br>
+        <hr class="mt-0 mb-4">
+
+   
+   
+
+		<div class="row">
+		    <div class="col-lg-12">
+		        <div class="panel panel-default p-4"id="auth-container"">
+		            
+		            <div class="panel-body">
+		            <div class="row">
+		            <div class="col-6">
+		            	<b>Donador:</b>	<br>
+		             <p ><b class="text-info">{{  donacion.persona.nombres }} {{  donacion.persona.apellido_paterno }}</b></p>
+		             <br>
+		            </div>
+		            <div class="col-6">
+		             <b>Fecha de Donacion:</b>	<br>
+		             <p ><b class="text-info">{{  donacion.created }}</b></p>
+		             <br>
+		             </div>
+		         </div>
+		         <div class="row">
+		         	 <div class="col-6">
+		             <b>Telefono:</b>	<br>
+		             <p ><b class="text-info">{{  donacion.persona.celular }}</b></p>
+		             <br>
+		             </div>
+		             <div class="col-6">
+		             <b>Correo:</b>	<br>
+		             <p ><b class="text-info">{{  donacion.persona.correo }}</b></p>
+		             <br>
+		             </div>
+		         </div>
+
+		         	{% if productos  %}
+   							
+							<div class="row">
+				         			<div class=' col-12 text-center text-secondary'>
+				         				<h4 >PRODUCTOS</h4>
+				         			</div>
+			         			</div>
+
+
+
+		             <table id="tabla" class="table table-responsive-lg table-responsive-md table-responsive-sm">
+		                            <thead>
+		                                <tr class="">
+		                                    
+		                                    <th class="text-center ">DESCRIPCION</th> 
+		                                    <th class="text-center">TIPO</th>		                                    
+		                                    <th class="text-center">FECHA EXPIRACION</th>                             
+		                                    <th class="text-center">CATEGORIA</th>
+		                                    <th class="text-center">CANTIDAD</th>
+		                                    
+		                                 </tr>
+		                            </thead>
+                            	<tbody>
+
+			                            {% for producto in productos %}
+			                                <tr>
+			                                    
+			                                    <td class="text-center">{{producto.descripcion}}</td>
+												<td class="text-center">{{ producto.tipo.nombre }}</td>
+												{% if producto.fecha_expiracion is None %}
+												<td class="text-center">No expira</td>
+												{% else %}
+												<td class="text-center">{{ producto.fecha_expiracion }}</td>
+
+												{% endif %}
+												
+												<td class="text-center">{{ producto.categoria }}</td>
+												<td class="text-center">{{ producto.cantidad }}</td>
+												
+                                               
+
+                                            </tr>
+                                            
+                                            	
+                                            	
+                                            
+			                            {% endfor %}
+
+			                            
+                           	 	</tbody>
+                           	 	<tfoot>
+									    <tr>
+									      <td></td>
+									      <td></td>
+									      
+									      <td></td><td></td>
+									      
+									      <td class="text-center"><b>Total</b><h3>{{ canti.suma }}</h3></td>
+									      
+									    </tr>
+									  </tfoot>
+                             </table>
+                             {% else %}
+								<div class="row">
+				         			<div class=' col-12 text-center text-danger'>
+				         				<h3 >No existen productos en la donacion de {{ donacion.persona.nombres }} {{ donacion.persona.apellido_paterno }} :( </h3>
+				         			</div>
+			         			</div>
+
+                         	         				
+							{% endif %}
+
+
+		            </div>
+		            
+		        </div>
+		    </div>
+		</div>
+
+   </div>
+   </div>
+
+   
+</body>
+{% endblock %}
+
+
+
+{% block footer%}
+{% endblock%}

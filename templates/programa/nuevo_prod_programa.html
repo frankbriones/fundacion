@@ -1,0 +1,296 @@
+{% extends "donacion/base.html" %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+
+
+
+{% block tittle %} Registra Productos a Evento{% endblock %}
+ 
+{% block content %}
+		{% if perms.programa %}
+ 
+		
+    <div class="container h-100">
+    	<!--<div class="row justify-content-center"> 
+   <a href="" class="col-3 btn btn-block btn-info">referescar.</a>	</div>
+-->
+{% if msg3   %}
+
+
+						    				<div class=" alert alert-success alert-dismissible col-lg-12 col-md-12 col-sm-12 h-25 text-center" height="10px">
+						    							<button type="button" class="close" data-dismiss="alert">&times;</button>
+													<b class=" "><h4>{{ msg3 }}</h4></b>
+													</div>
+							 				{% else %}
+												
+											{% endif %}
+        
+        <div class="row  justify-content-center ">
+            <div class=" col-md-10	col-sm-12  col-lg-10 " >
+
+    
+        <h3 class="page-header text-primary"><div class=" col-12 text-center">PRODUCTO PARA EL EVENTO 
+        	<div class=" col-12 text-center text-uppercase">{{ programa.nombre }}</div>
+      	</h3>
+        <br>
+
+		<div class="row justify-content-center">
+			<div class="row">	
+						    		   {% if messages %}
+										<ul class="messages">
+										    {% for message in messages %}
+										    <li{% if message.tags %} class="{{ message.tags }} alert alert-success "{% endif %}>Ingreso Exitoso</li>
+										    {% endfor %}
+										</ul>
+									{% endif %}
+						    	</div> 
+		    <div class="col-lg-12">
+		        <div class="panel panel-default p-4"id="auth-container"">
+		            
+		            <div class="panel-body">
+		            
+		                <form class="form-group" role="form" action="#" method="post">
+		                
+		                    {% csrf_token %}
+		                    <div class="row">
+						      <div class="col-6">
+						        
+						        {{ form.tipo|as_crispy_field }}
+						      </div>
+						      <div class="col-6">
+						        {{form.categoria|as_crispy_field}}
+						        
+						      </div>
+
+						    </div>
+						    <div class="row">
+						    	
+						    	<div class="col-6">
+						    		{{form.producto|as_crispy_field}}
+						    		
+
+						    	</div>
+						    
+						    	
+						    	<div class="col-6">
+						     
+						    		{{form.cant|as_crispy_field}}
+						    	</div>
+
+						    
+						    </div>
+						    
+						    <div class="row">
+						   		<div class="col-4">
+
+						    		<button type="submit" class="btn btn-primary"><i class="fas fa-plus text-white"></i> Agregar</button>
+
+								</div>
+								    <div class="col-4"></div>
+		    							<div class="col-lg-4 col-md-4 col-sm-4 text-right">    
+                                     <a href="{% url 'programa:programas' %}" class="btn btn-success text-white" ><i class="fas fa-check"></i> Listo
+    					
+                            </a>                          
+                        </div>
+    							  
+						    </div>
+						  </form>  
+
+		         {% if totals  %}
+   							
+							<div class="row">
+				         			<div class=' col-12 text-center text-secondary'>
+				         				<h2 >Productos registrados al programa  </h2>
+				         			</div>
+			         			</div>
+
+
+		            
+		         	<table id="tabla" class="table table-responsive-lg table-responsive-md table-responsive-sm">
+		                            <thead>
+		                                <tr class="">
+		                                    
+		                                    <th class="text-center ">TIPO</th> 
+		                                    <th class="text-center">EVENTO</th>
+											<th class="text-center">PRODUCTO</th>		                                    		                                    
+		                                    <th class="text-center">CANTIDAD</th>
+		                                    
+		                                 </tr>
+		                            </thead>
+                            	<tbody>
+
+			                            {% for total in totals %}
+			                                <tr>
+			                                    
+			                                    <td class="text-center">{{ total.tipo.nombre }}</td>
+												<td class="text-center">{{ total.programa.nombre}}</td>
+												<td class="text-center">{{ total.producto.descripcion }}</td>
+												<td class="text-center">{{ total.cant }}</td>
+												
+                                               
+
+                                            </tr>
+                                            
+                                            	
+                                            	
+                                            
+			                            {% endfor %}
+
+			                            
+                           	 	</tbody>
+                           	 	<tfoot>
+									   
+									  </tfoot>
+                             </table>
+                             {% else %}
+								<div class="row">
+				         			<div class=' col-12 text-center '>
+				         				<b> <h4 class=" bg-info text-light p-2 " >No existen registro de productos para este Programa </h4></b>
+				         			</div>
+			         			</div>
+
+                         	         				
+							{% endif %}
+
+		            </div>
+		            
+		        </div>
+		    </div>
+		</div>
+
+   </div>
+   </div>
+   
+   </div>
+     
+{% else %}
+
+
+
+
+
+
+
+<!--lo que podra ver el usuario de talleres (estudiante)-->
+ 
+		       
+		
+
+<br>
+
+		    	<div class="row justify-content-center">
+								<h1 class="text-danger">Si estas aqui es un error. Reportalo con la administracion.	</h1>
+				</div>
+
+				
+				
+
+
+
+
+
+
+
+
+
+
+
+
+{% endif %}
+
+
+{% endblock content %}
+
+
+
+{% block footer%}
+{% endblock%}
+
+
+
+ 
+ {% block extra_js %}
+
+<script type="text/javascript">
+  function actualizar(){getElementById('#id_cant')location.reload(true);}
+//Función para actualizar cada 4 segundos(4000 milisegundos)
+  //	setInterval("actualizar()",1000);
+</script>
+
+
+  <script>
+
+
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie != '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = jQuery.trim(cookies[i]);
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+
+
+
+
+function getCategoria(tipo_id, url){
+    $.ajaxSetup({
+        headers: { "X-CSRFToken": getCookie("csrftoken") }
+    });
+    $.ajax({
+    method: "POST",
+    url: "{% url 'programa:categoriasAsJson'  %}",
+    data: { tipo_id: tipo_id}
+  }).done(function( respuesta ) {
+        $("#id_categoria").empty()
+
+        $.each( respuesta, function( index, value )
+        {
+            $('#id_categoria').append('<option value="'+value.id+'">'+value.categoria+'</option>')
+        });
+       
+  });
+ }
+
+
+
+
+
+
+
+
+function getProducto(categoria_id, url){
+    $.ajaxSetup({
+        headers: { "X-CSRFToken": getCookie("csrftoken") }
+    });
+    $.ajax({
+    method: "POST",
+    url: "{% url 'programa:productosAsJson'  %}",
+    data: { categoria_id: categoria_id}
+  }).done(function( respuesta ) {
+        $("#id_producto").empty()
+
+        $.each( respuesta, function( index, value )
+        {
+            $('#id_producto').append('<option value="'+value.id+'">'+value.descripcion+'</option>')
+        });
+       
+  });
+  }
+
+
+ 
+
+
+</script>
+
+
+{%  endblock  %}

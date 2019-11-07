@@ -1,0 +1,192 @@
+{% extends 'donacion/base.html' %}
+{% load bootstrap4 %}
+{% bootstrap_css %}
+{% load crispy_forms_tags %}
+
+
+{% block tittle %} Nuevo Ingreso de Taller{% endblock %}
+{% block content %}
+
+ <div class="row justify-content-center">
+
+ 		<div class="col-8">
+
+ 					 <div class=" card border mb-3" style="max-width: 50rem;" >
+            	 <div class="card-header">
+				       		<div class="row ">
+				       			<div class="col-lg-6 col-md-12">
+				       				<h3 class="peage-header text-primary ">REGISTRO DE NUEVO TALLER</h3>
+				       			</div>
+				       			
+								<div class="col-lg-6 col-md-12 text-right">
+				       				 <a class="btn  btn-danger" href="{% url 'tallers:taller' %}" type="" > Retornar</a> 
+						      
+				       			</div>
+				       		</div>
+       			 </div>
+
+	   
+        <div class="card-body">
+        	
+         <div class="row"> {% if form.fecha_inicio.errors %}<div	class="col-12">
+         				
+										                                            <div class="alert alert-danger">
+										                                                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+										                                                <strong>Error!</strong> {{ form.fecha_inicio.errors }}
+										                                            </div>
+
+         	</div>
+
+			                                        						{% endif %}
+			                                        					</div>
+
+			 <div class="row"> {% if form.fecha_culmina.errors %}
+
+			 			<div	class="col-12">
+         				
+										                                            <div class="alert alert-danger">
+										                                                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+										                                                <strong>Error!</strong> {{ form.fecha_culmina.errors }}
+										                                            </div>
+
+         	</div>
+
+			                                        						{% endif %}
+			                                        					</div>
+						<form method="POST" action="">
+							 {% csrf_token %}
+							     
+										                        
+								
+
+								 <div class="row">
+		                    						      <div class="col-lg-6 col-md-6 text-dark">
+		                    						        {{ form.categoria|as_crispy_field }}
+		                    						      </div>
+		                    						      <div class="col-lg-6 col-md-6">
+		                    						        {{ form.persona|as_crispy_field }}
+		                    						      </div>
+		                    
+		                    </div>
+		                     <div class="row">
+		                    						      <div class="col-lg-6 col-md-6  ">
+		                    						        {{form.descripcion|as_crispy_field}}
+														  </div>
+														  <div class="col-lg-6 col-md-6">
+																{{ form.horario|as_crispy_field }}
+																
+															  </div>
+		                    						      
+		                    
+		                    </div>
+
+		                     <div class="row">
+		                    						      <div class="col-lg-6 col-md-6">
+		                    						        {{ form.fecha_inicio|as_crispy_field }}
+		                    						       
+		                    						      </div>
+		                    						      <div class="col-lg-6 col-md-6">
+		                    						        {{ form.fecha_culmina|as_crispy_field }}
+		                    						      </div>
+		                    
+		                    </div>
+		                     <div class="row">
+		                    						      <div class="col-lg-12 col-md-12">
+		                    						        {{ form.detalle|as_crispy_field }}
+		                    						      </div>
+		                    						     
+		                    						     
+		                    
+		                    </div>
+							
+							<div class="row">
+							<div	class="col-lg-12 col-md-12 text-center">
+									<div class="input-group"  >
+								  <span class="input-group-addon border rounded" style="background-color: #D6D8D8; width: 25px;">$</span>
+								    <input type="number" name="precio" class="form-control" placeholder="Precio"/>
+								</div>
+									
+								</div>
+								 <div class="col-lg-12 col-md-12">
+		                    						        {{ form.limite|as_crispy_field }}
+		                    						      </div>	
+							</div>	
+
+
+                <div class = "row justify-content-center mt-4">
+						  
+						 <b> <input type="submit" value="REGISTRAR TALLER " class="col-12 btn btn-primary"></b>&nbsp;&nbsp;&nbsp;&nbsp;
+						  
+						  </div>
+						</form>
+
+						<br>
+					
+					</div>
+	       
+		   
+   </div>
+
+ 			
+ 		</div>
+ 		
+           
+</div>
+{% endblock %}
+
+
+{% block footer%}
+{% endblock%}
+
+
+
+
+
+
+
+
+
+{% block extra_js %}
+
+<script type="text/javascript">
+  function actualizar(){getElementById('#id_descripcion')location.value.toUpperCase(true);}
+//Función para actualizar cada 4 segundos(4000 milisegundos)
+  //	setInterval("actualizar()",1000);
+</script>
+
+
+<script>
+
+        $('#id_fecha_inicio').datepicker({
+        locale: 'es-es',
+        format: 'dd/mm/yyyy'
+    });
+        
+    </script>
+<script>
+        $('#id_fecha_culmina').datepicker({
+        locale: 'es-es',
+        format: 'dd/mm/yyyy'
+    });
+    </script>
+
+    <!--  locale: 'es-es',
+        format: 'dd/mm/yyyy'
+         -->
+
+
+
+<script>
+     $(document).ready( function () {
+      $("input").on("keypress", function () {
+       $input=$(this);
+       setTimeout(function () {
+        $input.val($input.val().toUpperCase());
+       },50);
+      })
+     })
+    </script>
+
+
+
+{% endblock %}

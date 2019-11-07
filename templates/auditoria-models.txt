@@ -1,0 +1,44 @@
+
+se necesita django-crum para el cuerrent
+
+
+classAuditoria(models.Model):
+    """
+    Modelo de Auditoria donde se va a guardar de forma automatica la fecha de
+    creación de un objeto, quien lo creó, la fecha de la última actualización y
+     quien fue el que lo actualizó, este modelo no tendrá vista en la parte
+    administrativa de la plataforma ya que se usa como herencia en todos los
+    modelos para recrear este registro automático sobre todos los datos que
+    se trabajan en la misma.
+    """
+    fecha_creacion = models.DateTimeField(auto_now_add=True,
+                                          verbose_name='Fecha de creación')
+    """Fecha Creacion - tipo: DateTimeField"""
+    creado_por = models.ForeignKey(User, on_delete=models.CASCADE,
+                                   related_name='%(class)s_creado_por',
+                                   null=True, blank=True,
+                                   verbose_name='Usuario de creación')
+    """Creado Por - tipo: ForeignKey"""
+    fecha_actualizacion = models.DateTimeField(auto_now=True,
+                                               verbose_name='Fecha de actualización')
+    """Fecha Actualizacion - tipo: DateTimeField"""
+    actualizado_por = models.ForeignKey(
+        User, on_delete=models.CASCADE,
+        related_name='%(class)s_modificado_por',
+        null=True, blank=True,
+        verbose_name='Usuario última actualización')
+    """Actualizado Por - tipo: ForeignKey"""
+
+    classMeta:
+        abstract = True
+
+    deftraer_usuario(self):
+        return get_current_user()
+
+    defsave(self, *args, **kwargs):
+        if self.fecha_creacion isNone:
+            self.creado_por = self.traer_usuario()
+            self.actualizado_por = self.traer_usuario()
+        else:
+            self.actualizado_por = self.traer_usuario()
+        super(Auditoria, self).save(*args, **kwargs)

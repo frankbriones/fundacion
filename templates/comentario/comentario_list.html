@@ -1,0 +1,123 @@
+{% extends "donacion/base.html" %}
+{% load staticfiles %}
+{% load mathfilters %}
+{% load bootstrap4 %}
+{% block tittle %}  Modulo de comentarios{% endblock %}
+{% block content %}
+
+
+ <div class="row-lg-12 text-center">
+         
+     </div>
+
+
+    
+
+<div class="card border rounded">
+                              
+    
+    <div class="card-body">
+<div class="col-lg-12 col-sm-12 col-md-12">
+    <div class=" text-center">
+        <b> <h3 class=" border rounded  text-light p-2 text-uppercase" id="content">COMENTARIOS DE USUARioS</h3></b>
+       
+    </div>
+
+   
+        
+</div>
+
+
+
+</div>
+</div>
+
+  <!-- code here to list the books -->
+    <!-- code here to list the books -->
+        
+                <br>
+
+            
+
+        <br>  
+      
+                    <br>
+                <div class=" container-fluid">
+    
+                     <div class="justify-content-md-center "><br>
+                        <table id="tabla" class="table table-dark   table-responsive-lg table-responsive-md table-responsive-sm" cellspacing="0" width="100%">
+                                <thead class="">
+                                  <div class="row justify-content-center"> <H4>LISTADO DE COMENTARIOS</H4></div>
+                                    <tr class="">
+                                        
+                                        
+                                        <th class="text-center " width="25%">FECHA DE COMENTARIO</th> 
+                                        <th class="text-center" width="10%">USUARIO</th>
+                                        <th class="text-center" width="30%"  >DESCRIPCION</th>
+                                        <th class="text-center" width="40%"  >MODIFICADO</th>
+
+                                        
+                                        <th class="text-center" width="10%">ELIMINAR</th>                                  
+                                    </tr>
+                                </thead>
+                              <tbody class="table table-white text-dark">
+                                  {% for coment in comentarios %}
+                                      <tr>
+                                          
+                                          <td class="text-center"><strong class="text-uppercase">  {{ coment.created }}</strong>  </td>
+                                          <td class="text-center"><strong>{{ coment.autor }}</strong> </td>
+                                          <td class="text-center"><strong>{{ coment.contenido }}  </strong> </td>
+                                          <td class="text-left"><strong>{{ coment.modified }}  </strong> </td>
+
+                                          <td class="text-center">
+                                                                <a data-toggle="tooltip" data-placement="top" title="Quitar Comentario" href="{% url 'comentario-modulo:comentario_delete' coment.id %}" class="btn ink-reaction btn-floating-action btn-danger"><i class="fas fa-times-circle"></i> </a>
+                                                                
+
+                                                </td>
+                                          
+                      </tr>
+                                  {% endfor %}
+                              </tbody>
+                             </table>
+                    </div>
+</div>
+                    <br>  
+
+
+
+
+<div class="row justify-content-center">
+ 
+  
+</div>
+</div>
+
+
+
+{% endblock %}
+
+{% block footer %}
+{% endblock %}
+  {% block extra_js %}  
+
+   <script type="text/javascript" src="{% static 'js/jquery.js' %}" charset="UTF-8"></script>
+
+    <script src="{% static 'js/bootstrap.min.js' %}" charset="UTF-8"></script>
+
+    <script type="text/javascript" src="{% static 'js/jquery-ui.js' %}"></script>
+  <link rel="stylesheet" type="text/css" href="{% static 'css/jquery.dataTables.min.css'  %}"/>
+        <script src="{% static 'js/jquery.dataTables.min.js' %}"></script>
+      
+
+  
+      <script >
+      $(document).ready(function()
+          {
+              var table = $('#tabla').dataTable( {
+                  "language": {
+                    url: "/static/localizacion/es_ES.json"
+                  }
+            } );
+      });
+      </script>
+  {% endblock %}

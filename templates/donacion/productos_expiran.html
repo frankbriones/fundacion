@@ -1,0 +1,227 @@
+{% extends "donacion/base.html" %}
+{% load bootstrap4 %}
+
+  {% load mathfilters %}
+
+
+
+{% block tittle %} Productos proximos a expirar{% endblock %}
+{% block static %}
+<style  >
+  #alerta {
+    animation-name: animacionTaller;
+    animation-duration: 1500ms;
+    animation-iteration-count: infinite;
+    position: relative;
+   }
+   
+   @keyframes animacionTaller{
+    from{
+        opacity: 0;
+    }
+    to{
+        opacity: 1;
+    }
+   }
+</style>
+
+
+{% endblock%}
+{% block content %}
+
+
+		{% if perms.donacion.view_producto or perms.programa.change_evento %}
+    
+        
+        	<div class="card">
+        								
+			            <div class=" col-md-12	col-sm-12  col-lg-12 " >
+
+
+										<div class="card-body">
+								            					
+								            			
+								            	<div class="border rounded bg-danger col-12 pt-2">
+								            				<h3 class="page-header  text-light text-center">PRODUCTOS POR EXPIRAR EN LAS PROXIMAS FECHAS </h3>
+
+								            	</div>
+								            	
+								     				
+								    			
+								    			<br>
+								    			<div class="row">
+								    				<div class="col-6 text-left">
+								    					
+								      <a data-toggle="tooltip" data-placement="top" title="retornar" href="{% url 'donacion:stock_total' %}" class="btn bold ink-reaction btn-floating-action btn-info">Retornar </a><br>
+								       	    
+								    				</div>
+								    				
+								    					
+
+								    			</div>
+								        
+
+
+								            	</div>
+						</div>
+			</div>
+
+
+
+
+
+        <hr class="mb-4">
+
+
+												 	
+        <div class="row  ">
+                    	<div class="col-lg-12 col-md-12 col-sm-12">
+                        <table id="tabla" class="table table-dark   table-responsive-lg table-responsive-md table-responsive-sm" cellspacing="0" width="100%">
+		                            <thead class="">
+		                                <tr class="">
+
+		                                    <th class="text-center ">TIPO</th>
+
+		                                    <th class="text-center ">CATEGORIA</th>
+		                                    <th class="text-center ">DESCRIPCION</th> 
+		                                    <th class="text-center ">CANTIDAD</th>
+		                                    <th class="text-center ">SALIDA</th>
+		                                    <th class="text-center ">STOCK</th>
+		                                     <th class="text-center ">EXPIRA</th> 
+
+		                                     <th class="text-center ">ACCION</th>  
+
+		                                </tr>
+		                            </thead>
+                            	<tbody class="text-dark">
+			                                <tr>
+			                            {%  for producto in productos %}
+			                                	{% if producto.estado == 0 %}
+			                                    
+			                                     <td class="text-center">
+			                                    	{{ producto.tipo.nombre }}
+			                                	
+			                                    </td>
+			                                    	<td class="text-center">
+			                                    	{{ producto.categoria.categoria }}
+			                                	
+			                                    </td>
+
+			                                    <td class="text-center">
+			                                    	{{ producto.descripcion }}
+			                                    </td>
+
+
+			                                    <td class="text-center">
+													
+													{{ producto.cantidad}}
+													
+
+												</td>
+												
+												 <td class="text-center">
+													{% if  producto.cantidad|sub:producto.stock == 0 %}
+
+													<p class="text-danger">-----</p>
+													{% else %}
+													{{ producto.cantidad|sub:producto.stock}}
+													{% endif %}
+													
+													
+
+												</td>
+												 <td class="text-center" >
+
+												 	<strong>
+												 		{% if producto.stock == None %}
+												 		-----
+												 		{% else %}
+												 		{{producto.stock}}
+												 		{% endif %}
+
+												 	
+												 	</strong>
+												</td>
+
+												<td class="text-center">
+													
+													{{ producto.fecha_expiracion }}
+													
+												</td>
+												{% if producto.stock == 0%}
+												<td class="text-center">
+                                                                <h4><a href="{% url 'donacion:inactivar' producto.id %}" class="text-danger" data-toggle="tooltip" data-placement="top" title="Eliminar de Stock" ><i class="fas fa-times-circle"></i> </a></h4>
+                                                                
+                                                               
+
+                                                                
+                                                 </td>
+                                                 {% else %}
+                                                <td class="text-center">
+                                                                <h4><i   data-toggle="tooltip" data-placement="top" title="No es posible realizar esta accion" class="fas fa-times-circle"></i></h4>
+                                                                
+                                                               
+
+                                                                
+                                                 </td>
+                                                 {% endif %}
+			                                   
+			                                   
+												{% else %}
+
+												{% endif %}
+												
+												</tr>
+												{% empty %}
+    No existen Datos
+                                            
+                                      {%   endfor %}      
+
+
+                           	 	</tbody>
+                             </table>
+                         </div>
+                    </div>
+
+   
+   
+
+   
+   
+  {% else %}
+
+<br>
+
+          <div class="row justify-content-center">
+                <h1 class="text-danger">Si estas aqui es un error. Reportalo con la administracion. </h1>
+        </div>
+
+                {% endif%}
+
+
+{% endblock %}
+
+
+
+{% block footer%}
+{% endblock%}
+
+
+
+
+
+
+	{% block extra_js %}	
+	
+
+			<script >
+			$(document).ready(function()
+					{
+					    var table = $('#tabla').dataTable( {
+					        "language": {
+					        	url: "/static/localizacion/es_ES.json"
+					        }
+				    } );
+			});
+			</script>
+	{% endblock %}

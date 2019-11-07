@@ -1,0 +1,358 @@
+
+{% extends 'donacion/base.html' %}
+
+{% load staticfiles %}
+
+
+{% load mathfilters %}
+{% load bootstrap4 %}
+
+
+
+
+
+{% load crispy_forms_tags %}
+
+
+			  <title>{% block tittle %} Modulo de Informes {% endblock %}</title>
+
+
+
+
+{% block content %}
+		
+			<div class="card align-middle pt-2"> 
+				<div class="col-12 text-center">
+				<b> <h2 class="border rounded text-light p-2 " id="content" >INFORMES {{date}}</h2></b>
+			</div>
+			</div>
+				 
+		<br><br>
+
+		{% if perms.donacion and perms.programa %}
+		
+		<br/><br/>
+		<div class="row  justify-content-center " >
+			
+			<div class=" bg-light col-lg-4 col-md-8 col-sm-8" >
+						<button type="button" class="btn btn-block btn-lg btn-platzi" data-toggle="modal" data-target="#myModalssj" >
+							
+										   <h1 > <i class="fas fa-cubes text-white" > <br><h1>PRODUCTOS</h1></i></h1>
+										</button>
+										<div class="modal reporte" id="myModalssj">
+					  <div class="modal-dialog" id="">
+						<div class="modal-content">
+		
+						  <!-- Modal Header -->
+						  <div class="modal-header">
+							<h4 class="modal-title">Reporte de Producto Ingresados en las diferentes donaciones.</h4>
+							<button type="button" class="close" data-dismiss="modal">&times;</button>
+						  </div>
+		
+						  <!-- Modal body -->
+						  <div class="modal-body">
+		
+								   <br>
+								  <form action="{% url 'donacion:reporte_donaciones' %}">
+						<input placeholder="Fecha donde inicia el reporte" id="fechita4"  name="query" value="{{query}}" required />
+								 <p class="text-danger text-center">(Seleccione dia especificamente)</p><br>
+								<input placeholder="Fecha donde finaliza el reporte" id="fechita5"  name="query2" value="{{query2}}" required />
+								 <p class="text-danger text-center">(Seleccione dia especificamente)</p>
+									<div class="row justify-content-center">
+										<input type="submit" class="btn btn-success" value="Archivo Descargable"  />
+									</div>
+								</form>
+		
+		
+		
+		
+						  </div>
+		
+						  <!-- Modal footer 
+						  <div class="modal-footer">
+							<button type="submit" class="btn btn-success" data-dismiss="modal">Descargar</button>
+						  </div>
+		-->
+						</div>
+					  </div>
+					</div>
+			</div>
+		
+		
+		
+		
+		
+		
+		
+		<br>
+			<div class="  col-lg-2 col-md-0" >
+			<h1 class="text-center" ></h1>
+			</div>
+		
+			<div class=" bg-light col-lg-4 col-md-8 col-sm-8" >
+						<button type="button" class="btn btn-block btn-lg  btn-platzi" data-toggle="modal" data-target="#myModalss" >
+							
+										   <h1> <i class="fas fa-toolbox text-white"> <br><h1>TALLERES</h1></i></h1>
+										</button>
+										<div class="modal reporte" id="myModalss">
+					  <div class="modal-dialog">
+						<div class="modal-content">
+		
+						  <!-- Modal Header -->
+						  <div class="modal-header">
+							<h4 class="modal-title">Reporte de Talleres realizados en las difrentes fechas del año.</h4>
+							<button type="button" class="close" data-dismiss="modal">&times;</button>
+						  </div>
+		
+						  <!-- Modal body -->
+						  <div class="modal-body">
+		
+								<br>
+								  <form action="{% url 'donacion:reporte_talleres' %}">
+								<input placeholder="Fecha donde inicia el reporte" id="fechita"  name="query" value="{{query}}" required />
+								<p class="text-danger text-center">(Seleccione dia especificamente)</p>
+								<input placeholder="Fecha donde finaliza el reporte" id="fechita6"  name="query2" value="{{query2}}" required />
+								 <p class="text-danger text-center">(Seleccione dia especificamente)</p>
+									<div class="row justify-content-center">
+										<input type="submit" class="btn btn-info" value="Archivo Descargable" />
+									</div>
+								</form>
+		
+		
+		
+		
+						  </div>
+		
+						  <!-- Modal footer 
+						  <div class="modal-footer">
+							<button type="submit" class="btn btn-success" data-dismiss="modal">Descargar</button>
+						  </div>
+		-->
+						</div>
+					  </div>
+					</div>
+			</div>
+			
+		</div>
+		
+		<br><br>
+		
+		
+		<div class="row justify-content-center ">
+			<div class=" bg-light col-lg-4 col-md-8 col-sm-8" >
+						<button type="button" class="btn btn-block btn-lg btn-platzi" data-toggle="modal" data-target="#myModals" >
+							
+											<h1><i class="fas fa-project-diagram text-white"><br><h1>PROGRAMAS</h1></i> </h1>
+										</button>
+										<div class="modal reporte" id="myModals">
+					  <div class="modal-dialog">
+						<div class="modal-content">
+		
+						  <!-- Modal Header -->
+						  <div class="modal-header">
+							<h4 class="modal-title">Reporte de los Programas Sociales por mes.</h4>
+							<button type="button" class="close" data-dismiss="modal">&times;</button>
+						  </div>
+		
+						  <!-- Modal body -->
+						  <div class="modal-body"><br>
+							  <br>
+						   <form action="{% url 'donacion:reporte_programas' %}">
+								 <input id="fechita2" placeholder="fecha donde inicia el reporte"  name="query" value="{{query}}" required/>
+								<p class="text-danger text-center">(Seleccione dia especificamente)</p>
+								 <input id="fechita7" placeholder="fecha donde finaliza el reporte"  name="query2" value="{{query2}}" required/>
+								<p class="text-danger text-center">(Seleccione dia especificamente)</p>
+								<div class="row justify-content-center">
+									<input type="submit" class="btn btn-info" value="Archivo Descargable"   />
+							</div>
+							</form>
+						  </div>
+		
+						  <!-- Modal footer 
+						  <div class="modal-footer">
+							<button type="submit" class="btn btn-success" data-dismiss="modal">Descargar</button>
+						  </div>
+		-->
+						</div>
+					  </div>
+					</div>
+			</div>
+		
+		
+		
+		
+		
+		
+			<div class=" col-lg-2 col-md-0">
+			<h1 class="text-center"> </h1>
+			</div>
+		
+			<div class=" bg-light col-lg-4 col-md-8 col-sm-8" >
+						<button type="button" class="btn btn-block btn-lg btn-platzi" data-toggle="modal" data-target="#myModalsss" >
+							
+											<h1><i class="fas fa-users text-white"> <br><h1>VOLUNTARIOS</h1>  </i></h1>
+										</button>
+										<div class="modal reporte" id="myModalsss">
+					  <div class="modal-dialog">
+						<div class="modal-content">
+		
+						  <!-- Modal Header -->
+						  <div class="modal-header">
+							<h4 class="modal-title">Reporte de Voluntarios Ingresados, segun la fecha.</h4>
+						   <button type="button" class="close" data-dismiss="modal">&times;</button>
+						  </div>
+		
+						  <!-- Modal body -->
+						  <div class="modal-body">
+							 <br>
+								  <form action="{% url 'donacion:reporte_voluntarios' %}">
+								<input id="fechita3" placeholder="Fecha donde inicia el reporte"  name="query" value="{{query}}" required/>
+								 <p class="text-danger text-center">(Seleccione dia especificamente)</p>
+								 <input id="fechita8" placeholder="Fecha finaliza donde el reporte"  name="query2" value="{{query2}}" required/>
+								 <p class="text-danger text-center">(Seleccione dia especificamente)</p>
+								<div class="row justify-content-center">
+									<input type="submit" class="btn btn-success"  value="Archivo Descargable" />
+		
+								  </div>
+							  </form>
+		
+						  <!-- Modal footer 
+						  <div class="modal-footer">
+							<button type="button" class="btn badge-info text-primary close" data-dismiss="modal">Cancelar</button>
+						  </div>
+		-->
+						</div>
+					  </div>
+					</div>
+			</div>
+		</div>
+		</div>
+			
+		{% else %}
+		<div class="col text-center">
+			<h2><strong>Lo sentimos, Pero no tienes acceso a este lado del Sistema. Tenga un Buen dia. 
+			</strong></h2>
+		</div>
+		
+		{% endif %}
+		
+		
+		
+		
+		
+{% endblock %}
+		{% block footer %}
+		
+
+
+		{% endblock %}
+		
+		
+			{% block extra_js %}	
+	
+				<script>
+		
+				$('#fechita8').datepicker({
+					locale: 'es-es',
+				format: 'yyyy-mm-dd'
+			   
+			});
+				
+			</script>
+
+			<script>
+		
+				$('#fechita7').datepicker({
+					locale: 'es-es',
+				format: 'yyyy-mm-dd'
+			   
+			});
+				
+			</script>
+
+		<script>
+		
+				$('#fechita6').datepicker({
+					locale: 'es-es',
+				format: 'yyyy-mm-dd'
+			   
+			});
+				
+			</script>	
+		<script>
+		
+				$('#fechita').datepicker({
+					locale: 'es-es',
+				format: 'yyyy-mm-dd'
+			   
+			});
+				
+			</script>
+
+			<script>
+		
+				$('#fechita5').datepicker({
+					locale: 'es-es',
+				format: 'yyyy-mm-dd'
+			   
+			});
+				
+			</script>
+		
+		<script>
+		
+				$('#fechita2').datepicker({
+					locale: 'es-es',
+				format: 'yyyy-mm-dd'
+			   
+			});
+				
+			</script>
+		
+		
+		<script>
+		
+				$('#fechita3').datepicker({
+					locale: 'es-es',
+				format: 'yyyy-mm-dd'
+			   
+			});
+				
+			</script>
+		
+		<script>
+		
+				$('#fechita4').datepicker({
+					locale: 'es-es',
+				format: 'yyyy-mm-dd'
+			   
+			});
+				
+			</script>
+		
+		
+		
+		
+		
+		
+		
+			
+			{% endblock %}
+		
+		
+		
+		
+			
+		
+
+
+
+
+</body>
+</html>
+
+
+
+
+
+<!-- The Modal -->

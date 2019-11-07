@@ -1,0 +1,400 @@
+{% extends "donacion/base.html" %}
+{% load bootstrap4 %}
+{% load staticfiles %}
+{% block tittle %} Perfil de {{user.nombres}}{% endblock %}
+{% block content %}
+
+ 	<br><br>
+
+  <div class="container-fluid">  
+    <div class="row">
+      <div class="col-md-4 col-xs-12 pb-2">
+   
+
+            <div class="card text-white bg-info mb-3" style="max-width: 18rem;">
+          <div class="card-header">Fecha Creacion.</div>
+          <div class="card-body">
+            <p class="card-text">{{user.created}}.</p>
+            Estado : {% if user.is_active == True %}Activo{% endif %}
+          </div>
+        </div>
+
+          <div class="card text-white bg-info mb-3 " style="max-width: 18rem;">
+            <div class="card-header">Fecha Modificacion.</div>
+            <div class="card-body">              <p class="card-text">{{user.modified}}</p>
+              
+            </div>
+          </div>
+          <!-- <div class="card text-white bg-secondary mb-3" style="max-width: 18rem;">
+            <div class="card-header">Ultima Visita.</div>
+            <div class="card-body">
+              <p class="card-text">{{user.last_login}}</p>
+              
+            </div>
+          </div> -->
+
+    
+      </div>
+
+
+      <div class="col-md-8 col-xs-12 ">
+
+
+    <div class="row justify-content-center ">     
+       <div class="card  border mb-3" style="max-width: 50rem;">
+        <div class="card-header">
+          <div class="row">
+            <div class="col-6">
+               <div class="row">
+                <h3 class="peage-header text-primary ">DETALLE DE PERFIL
+              </h3> <br><br> 
+
+               </div>
+
+              {% if perms.admin %}
+                  <div class="row">
+                   <a href="{% url 'admin:index' %}" class="btn btn-platzi">Administrador  <i class="fas fa-user-shield  ">   </i></a>&nbsp;
+
+                  {% elif perms.talleres %} 
+                      Docente
+
+                      {% elif perms.programa %}
+                          Operador
+
+                {% else  %}
+                    {% if user.usuar %}
+                        Estudiante
+                    {% else %}
+                        Usuario
+                    {% endif%}
+                {% endif%}
+
+
+
+              {% if perms.admin %}
+               
+                       
+                    
+                  </div>
+              {% endif%}
+              
+            </div>
+            
+<div class="col-6 text-right">
+               <a class="btn  badge-secondary" href="{% url 'persona:logout' %}" type="" style=" background-color: #FF8000;"><i class="fas fa-sign-out-alt text-white"> Salir </i></a> 
+          
+            </div>
+           
+          </div>
+                       
+          
+        </div>
+   
+
+   
+   
+        
+                   
+
+    <div class=" card-body text-secondary" id="auth-container">
+      <div class="row justify-content-center ">
+
+        <div class="col-lg-4 col-md-8 text-center">
+        
+                        {% if profile.imagen %}
+                        <img src="{{ MEDIA_URL }}{{ profile.imagen.url }}" class="img-thumbnail" width="100%" height="100%" />
+                    {% else%}
+                        <img src="{% static 'img/default-profile.png' %}" class="img-thumbnail" width="80%" height="80%" />
+                    {% endif %}
+
+        </div>
+
+        <div class="col-8  ">
+          <div class="row ">
+
+                <div class="col-lg-6 col-md-12 text-left text-sm-center ">
+                        <b>Nombres:</b><br>
+                <b class="text-info"><h3>{{  user.nombres }}</h3></b>
+                </div><br><br><br>
+                <div class="col-lg-6 col-md-12 text-left text-sm-center ">
+                        <b  class="">Apellidos:</b> <br>
+                <b class="text-info"><h3>{{ user.apellidos }}</h3></b>
+              </div><br><br><br>
+          
+                      
+                 </div>
+
+               
+        <br>
+         <div class="row ">
+                      
+                      <div class=" col-lg-6 col-md-12 text-left text-sm-center ">
+                        <b  class="">Correo:</b> <span class="text-danger">(usuario)</span> <br>
+                <p ><b class="text-info">{{  user.email }}</b></p>
+                      </div><br><br><br>
+
+                      <div class="col-lg-6 col-md-12 text-left text-sm-center ">
+                        <b  class="">Movil:</b> <br>
+                <b class="text-info"><h3>{{  user.celular }}</h3></b>
+              </div>
+                      
+              
+                      
+                    </div> <br>
+
+
+      </div>
+
+      </div>
+      
+       </div>
+<br>
+
+<div class="card-footer">
+  
+
+
+                    <div class="row ">
+                      
+                    <div class="col-6 text-left ">
+                      <a class="btn btn-primary badge-info col-4 " href="{% url 'persona:editar' %}" type=""><i class="fas fa-edit"></i></a>
+
+                    </div>      
+                    
+                    
+                <div class="col-6 text-right">
+              
+                      <a class="btn  btn-info"  href="{% url 'persona:change_password' %}" type=""><i class="fas fa-unlock-alt"></i></a>
+
+                    
+                </div>
+
+
+
+</div>
+           </div>
+</div>
+</div>
+        
+      </div>
+      
+    
+
+
+
+  </div>
+  </div>
+  
+
+  
+ 
+
+
+
+
+ 	
+	
+
+
+
+
+
+<br><br><br>
+{% if talleres %}
+  
+<div class="row justify-content-center">	<h3 class="text-danger"><strong>Tus Talleres</strong>	</h3></div>	
+
+<br>
+<div class="row justify-content-center " id=auth-container>
+
+{% for taller in talleres %}
+
+	
+
+		
+ 
+  <div class="col-12 text-left   " ><br>
+
+  	<div class="card  bg-secondary">
+  				<div class="row justify-content-center">
+  				{% if perms.talleres.change_taller %}
+                          <h4><strong class=" text-light " ><a class="text-light" href="{{taller.get_absolute_url}}" title="">{{taller.descripcion}}</a></strong></h4>
+                          {% else %}
+                           <h4><strong class=" text-light text-uppercase " >{{taller.descripcion}}</strong></h4>
+                          {%endif %}
+  		</div>
+  	</div>
+  		
+  			
+<hr>
+
+  			
+
+      <div class="row">
+        <div class="col-lg-6 col-md-6 col-sm-6">
+           <h5 class=" text-dark"><strong>CAPACITADOR :</strong> &nbsp; {{taller.persona}} 
+
+           </h5>
+           <h5 class=" text-dark"><strong>INSCRITO :</strong> &nbsp;
+
+    {% for estad in estado %}
+
+             {% if estad.taller.descripcion == taller.descripcion %}
+             {{estad.inscrito}}
+             {% else %}
+             {% endif %}
+    {% endfor %}
+            
+           </h5>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-6">
+           <h5 class=" text-dark"><strong>CATEGORIA :</strong> &nbsp; {{taller.get_categoria_display}}</h5>
+        </div>
+        <div class="col-lg-3 col-md-12 col-sm-12">
+
+      {% if taller.categoria == 0 or taller.categoria == 2 %}
+              <div class="row  justify-content-center"> 
+                  <h2>  <i class="fas fa-handshake " style="color: purple;">
+                      </i>
+                  </h2>
+              </div>
+
+                {% elif taller.categoria == 3 or taller.categoria == 4  %}
+                  <div class="row justify-content-center">  
+                        <h2>  <i class="fas fa-laptop" style="color: purple;"></i>
+                     </h2>
+
+                    </div>
+
+                
+
+      {% else %}
+              <div class="row justify-content-center">  
+              <h2>  <i class="fas fa-users" style="color: purple;"></i>
+               </h2>
+
+              </div>
+
+      {% endif%}
+          
+        </div>
+
+      </div>
+
+   
+   
+
+
+    {% for estad in estado %}
+
+    {% if estad.taller.descripcion == taller.descripcion %}
+
+    			{%  if estad.estado ==  1 %}
+        			<div class="row justify-content-center">
+        					<div	class="col-lg-6 col-md-12 col-sm-12">
+        						<h3><span class="badge text-light " style="background: #0aa89e;">  APROBADO </span>
+        						
+                        				</h3>
+        					</div>
+
+    					
+
+    					<div	class="col-lg-6 col-md-12 col-sm-12 text-right text-md-right text-sm-right">
+    					
+    						 &nbsp;<a href="{% url 'talleres:certificado' profile.id taller.id    %}" class="text-success" ><i class="fas fa-download text-success"></i> </a>&nbsp;	
+
+    					
+    					</div>
+    					
+    			</div>
+    			<div class="row "> 
+    				<div class="col-6 text-left">	
+    					<p class="text-success h-50">	<strong>Felicidades por aprobar el taller.</strong></p>
+    			</div>	
+    				<div	class="col-6 text-right">
+    					<p class="text-dark">Descarga tu certificado.</p>	
+    				</div>
+    				
+    				
+    			</div>
+    			
+    			
+    				
+                    
+        			{% elif estad.estado == 2%}
+                    <h3><span class="badge text-light" style="background: red;">  ABANDONO</span></h3>
+        			{% else %}
+                    <h3><span class="badge bg-warning ">  CURSANDO</span></h3>
+              {% endif%}
+    		{%  endif %}
+
+
+    		{% endfor %}
+	
+
+      </div>
+
+	
+
+
+{% endfor %}
+
+
+
+
+
+</div>
+
+<br>
+
+{% if talleres %}
+<hr class="bd-dark">
+		   
+		    
+				
+				<div class="row justify-content-center">
+									<nav aria-label="Page navigation example">
+						 <ul class="pagination ">
+						    {% if talleres.has_previous %}<li class="page-item"><a class="page-link" href="?page={{talleres.previous_page_number}}&query={{ query }}">Anterior</a></li>{% endif %}
+						    <li class="page-item"><a class="page-link" >Página {{ talleres.number }} de {{ talleres.paginator.num_pages }}</a></li>
+						   
+						    {% if talleres.has_next %}<li class="page-item"><a class="page-link" href="?page={{talleres.next_page_number}}&query={{ query }}">Siguiente</a></li>{% endif %}
+						  </ul>
+						</nav>
+				</div>
+{%else%}
+{% endif %}
+
+<br><br>
+
+<div class="row justify-content-center">
+
+    <div  class="col-5 ">
+      <a class="btn btn-primary btn-block" href="{% url 'website:talleres'   %}">Talleres Disponibles</a>
+
+    </div>
+
+</div>
+
+{% else %}
+<!-- 
+  <br>
+  <div class="row justify-content-center">	
+  <h2 class="text-success">NO HAZ REALIZADO NINGUN TALLER, VAMOS ANIMATE. 
+  	</h2>
+  </div>
+  <br>
+ 
+
+
+ -->
+{% endif %}
+
+{% endblock %}
+
+{% block content2 %}
+{% endblock %}
+
+
+
+

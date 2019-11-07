@@ -1,0 +1,176 @@
+{% extends "donacion/base.html" %}
+
+{{  form.media }}
+{% load crispy_forms_tags %}
+{% load bootstrap4 %}
+{% load staticfiles %}
+
+{% block tittle %}  Registro de voluntario a la fundacion{% endblock %}
+{% block content %}
+
+	
+        <div class="container ">
+
+            <div class=" row justify-content-center"  >
+    {% if messages %}
+					<ul class="messages">
+					    {% for message in messages %}
+					    <li{% if message.tags %} class="{{ message.tags }} alert alert-success "{% endif %}>{{message}}</li>
+					    {% endfor %}
+					</ul>
+				{% endif %}
+        <h3 class="page-header text-primary ">INGRESA TUS DATOS Y FORMA PARTE DE NUESTRO EQUIPO!</h3>
+<hr class="mt-0 mb-4">
+ {% if form.fecha_nacimiento.errors %}<div class="row">
+			 	<div	class="col-12">
+			 				<div class="alert alert-danger">
+										                                                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+										                                                <strong>Error!</strong> No puede ser menor de 18 años
+										                                            </div>
+			 	
+			 </div
+			 ></div>	
+			 																	
+
+			                                        						{% endif %}
+   
+   
+
+		<div class="container-fluid">
+
+		    <div class="row">
+		        <div class="panel panel-default p-4  "id="auth-container">
+		            
+		            <div class="panel-body">
+		                
+		                <br><form class="form-group" name="formacedula"  action="" method="POST" enctype="multipart/form-data">
+		                   {% csrf_token %}
+		                   <div class="row-lg-12 text-center">
+		                   <h4 class="page-header border rounded  text-light" id="content" >DATOS PERSONALES</h4>
+		               </div>
+		                    <div class="row">
+		                    						      <div class="col-lg-4 col-md-6">
+		                    						        {{ form.cedula|as_crispy_field }}
+		                    						      </div>
+		                    						      <div class="col-lg-8 col-md-6">
+		                    						        {{ form.nombres|as_crispy_field }}
+		                    						      </div>
+		                    
+		                    </div>
+		                    						    <div class="row">
+		                    						    	<div class="col-lg-4 col-md-6 " >
+		                    						    		{{form.apellido_paterno|as_crispy_field}}
+		                    						    	</div>
+		                    						    	<div class="col-lg-4 col-md-6">
+		                    						    		{{form.apellido_materno|as_crispy_field}}
+		                    						    	</div>
+		                    						    	<div class="col-lg-4 col-md-12">
+		                    						    		{{form.sexo|as_crispy_field}}
+		                    						    		</div>
+		                    						    	</div>
+
+		                    						    
+		                    						    		<div class="row-lg-12 text-center">
+		                  												 <h4 class=" border rounded page-header  text-light" id="content" >DATOS EXTRAS</h4>
+		               											</div>
+		                    						    
+		                    								<div class="row">
+					                    						    	<div class="col-lg-4 col-md-4">
+					                    						    		{{form.celular|as_crispy_field}}
+					                    						    	</div>
+					                    						    	<div class="col-lg-4 col-md-4">
+					                    						    		{{form.convencional|as_crispy_field}}
+					                    						    	</div>	
+					                    						    	<div class="col-lg-4 col-md-4">
+					                    						    		{{form.fecha_nacimiento|as_crispy_field}}
+					                    						    		
+					                    						   		 </div>					    	
+		                    						 
+		                    						    	
+					                    						   		 <div class="col-lg-12 col-md-12">
+					                    						    		{{form.direccion|as_crispy_field}}
+					                    						    	</div>
+		                    						    	</div>
+		                    						    <div class="row">
+		                    								
+		                    						    	<div class="col-lg-8 col-md-6">
+		                    						    		{{form.correo|as_crispy_field}}
+		                    						    		
+		                    						    	</div>		
+		                    						    	
+
+										                        
+										                    
+		                    						    	<div class= "col-lg-4 col-md-6">
+		                    						    		
+		                    						    	</div>	
+
+		                    						   </div>
+
+		                    						   <div class="row-lg-12 text-center">
+		                  												 <h4 class="border rounded page-header  text-light" id="content">Imagen</h4>
+		               									</div>
+		                    						    <div class="row">
+		                    						    	
+		                    						    	<div class="col-lg-12 col-md-12 col-sm-12 ">
+		                    						    		<div class="file-field " >
+																    <div class="btn  btn-sm float-left border rounded page-header  text-light" id="content">
+																      <span >Elije una Imagen</span>
+																      <input type="file"  name="imagen" class="btn btn-platzi"  />&nbsp;
+																     </div>
+																    
+																  </div>
+		                    						    	</div>
+
+
+		                    						    </div><br>
+		                    						      <div class="row justify-content-center text-success"> 						    
+						    						    
+						  <strong>Imagenes solo formato .png/ .jpg y con un peso maximo de 2.5MB</strong>
+						</div>
+		                    						    
+		                    						    <br>
+		                   <div class="row justify-content-center"> 						    
+						    						    
+						   
+						   <div class="col-6">
+						   	
+						   <button type="submit" class="btn btn-platzi btn-block">Registrar</button>
+
+						   </div>
+
+						  
+						 
+						</div>
+
+<br>
+						<div class="row justify-content-center"> 
+							<a href="/" title="Regresar" class="btn btn-danger">Regresar a Inicio</a>
+						</div>
+		                </form> 
+		                </div>          
+		           </div>
+		        </div>
+		    </div>
+		</div>
+	</div>
+
+		
+
+   
+
+     
+{% endblock content %}
+
+
+
+
+
+{% block footer%}
+{% endblock%}
+ 
+{% block js %}
+
+    
+  
+{% endblock js %}

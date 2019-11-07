@@ -1,0 +1,15 @@
+Servicios Web RESTful
+Los dos conceptos clave son necesarios ya que un servicio Web RESTful es aquél servicio web que está basado en la arquitectura REST. Los servicios Web RESTful se basan en recursos. Un recurso es una entidad, la cual se almacena principalmente en un servidor y el cliente solicita el recurso utilizando servicios Web RESTful.
+
+Características principales de un servicio Web RESTful
+Tiene cinco operaciones típicas: listar, crear, leer, actualizar y borrar
+Cada operación requiere de dos cosas: El método URI y HTTP
+El URI es un sustantivo que contiene el nombre del recurso
+El método HTTP es un verbo
+
+
+
+servicios restfull
+
+https://blog.bi-geek.com/servicios-web-restful/
+

@@ -1,0 +1,184 @@
+{% extends "donacion/base.html" %}
+{{  form.media }}
+{% load crispy_forms_tags %}
+{% load bootstrap4 %}
+{% load staticfiles %}
+
+
+{% block tittle %} Editar Voluntario {{persona.nombres}} {{persona.apellido_paterno}}{% endblock %}
+<div class="row">
+	<div class="col-6">
+
+
+		{% block content %}
+ 
+		
+    
+        
+        <div class="row  justify-content-center ">
+            <div class=" col-md-12 col-sm-12  col-lg-12 p-4 "  >
+    
+        <h3 class="page-header text-primary ">EDITAR VOLUNTARIO</h3>
+        			<hr class="mt-0 mb-4">
+   
+   
+
+		<div class="row">
+		    <div class="col-lg-12 col-md-12 col-sm-12">
+		        <div class="card p-4 border border-secondary rounded text-primary >
+		            
+		            <div class="panel-body">
+		            		
+		                <div class="row justify-content-center">
+		                	
+		                	<div class="col-6 ">
+
+				<div class="container col-lg-10 col-md-3 col-sm-4 text-center  ">
+		                		{% if persona.imagen %}
+                        <img src="{{ MEDIA_URL }}{{ persona.imagen.url }}" class="img-thumbnail" width="100%" height="100%" />
+                    {% else%}
+                        <img src="{% static 'img/default-profile.png' %}" class="img-thumbnail" width="80%" height="80%" />
+                    {% endif %}
+
+		           
+			</div>
+
+			</div>
+		                
+
+		                	
+		                </div>
+		                <br>
+		                <form class="form-group" name="formacedula"  action="" method="POST" enctype="multipart/form-data">
+		                   {% csrf_token %}
+		                   <div class="row-lg-12 text-center">
+		                   <h4 class="border rounded text-light pt-2" id="content" >DATOS PERSONALES</h4>
+		               </div>
+		                    <div class="row">
+		                    						      <div class="col-lg-4 col-md-6">
+		                    						        {{ form.cedula|as_crispy_field }}
+		                    						      </div>
+		                    						      <div class="col-lg-8 col-md-6">
+		                    						        {{ form.nombres|as_crispy_field }}
+		                    						      </div>
+		                    
+		                    </div>
+		                    						    <div class="row">
+		                    						    	<div class="col-lg-4 col-md-6 " >
+		                    						    		{{form.apellido_paterno|as_crispy_field}}
+		                    						    	</div>
+		                    						    	<div class="col-lg-4 col-md-6">
+		                    						    		{{form.apellido_materno|as_crispy_field}}
+		                    						    	</div>
+		                    						    	<div class="col-lg-4 col-md-12">
+		                    						    		{{form.sexo|as_crispy_field}}
+		                    						    		</div>
+		                    						    	</div>
+
+		                    						    
+		                    						    		<div class="row-lg-12 text-center">
+		                  												 <h4 class="border rounded text-light pt-2" id="content">DATOS EXTRAS</h4>
+		               											</div>
+		                    						    
+		                    								<div class="row">
+					                    						    	<div class="col-lg-4 col-md-4">
+					                    						    		{{form.celular|as_crispy_field}}
+					                    						    	</div>
+					                    						    	<div class="col-lg-4 col-md-4">
+					                    						    		{{form.convencional|as_crispy_field}}
+					                    						    	</div>	
+					                    						    	<div class="col-lg-4 col-md-4">
+					                    						    		{{form.fecha_nacimiento|as_crispy_field}}
+					                    						    		 
+					                    						   		 </div>					    	
+		                    						 
+		                    						    	
+					                    						   		 <div class="col-lg-12 col-md-12">
+					                    						    		{{form.direccion|as_crispy_field}}
+					                    						    	</div>
+		                    						    	</div>
+		                    						    <div class="row">
+		                    								
+		                    						    	<div class="col-lg-8 col-md-6">
+		                    						    		{{form.correo|as_crispy_field}}
+		                    						    		
+		                    						    	</div>	
+		                    						    	<div class="col-lg-4 col-md-6">
+		                    						    		{{form.tipo|as_crispy_field}}
+		                    						    		
+		                    						    	</div>		
+		                    						    	
+
+										                        
+										                    
+
+		                    						   </div>
+
+		                    						   <div class="row-lg-12 text-center">
+		                  												 <h4 class="border rounded text-light pt-2" id="content" >IMAGEN</h4>
+		               									</div>
+		                    						   <div class="row">
+		                    						    	
+		                    						    		<div class="col-lg-12 col-md-12 col-sm-12 ">
+		                    						    		<div class="col-lg-12 col-md-12 col-sm-12 ">
+		                    						    		<div class="file-field " >
+																    <div class="btn  btn-sm float-left border rounded page-header  text-light" id="content">
+																      <span >Elije una Imagen</span>
+																      <input type="file"  name="imagen" class="btn btn-platzi"  />&nbsp;
+																     </div>
+																    
+																  </div>
+		                    						    	</div>
+		                    						    	</div>
+
+		                    						    </div><br>
+		                    						      <div class="row justify-content-center text-success"> 						    
+						    						    
+						  <strong>Imagenes solo formato .png/ .jpg y con un peso maximo de 2.5MB</strong>
+						</div>				    
+		                    						    <br>
+		                   <div class="row justify-content-center"> 						    
+						    						    
+						   <!--<button type="submit" onmousemove="validarcedula(cedula)" class="btn btn-success">Registrar</button>-->
+						   <button type="submit"  class="btn btn-primary">Registrar</button>
+						   &nbsp;&nbsp;&nbsp;&nbsp;
+						  <a data-toggle="tooltip" data-placement="top" title="retornar" href="{% url 'persona:personas' %}" class="btn bold ink-reaction btn-floating-action btn-danger">Retornar </a>
+						</div>
+						
+
+		                </form> 
+		                </div>          
+		           </div>
+		        </div>
+		    </div>
+		</div>
+	</div>
+
+		
+
+   
+
+
+
+{% endblock content %}
+
+ 
+
+
+
+		
+	</div>
+	
+</div>
+
+
+ {% block footer%}
+{% endblock%}
+
+
+
+{% block js %}
+
+    
+  
+{% endblock js %}

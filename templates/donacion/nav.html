@@ -1,0 +1,186 @@
+
+
+{% load staticfiles %}
+
+    <nav id="content" class="navbar  fixed-top">
+        <div class="container">
+           <div class="row">    
+             
+                
+        <a href ="/" class="navbar-brand"   >
+            <img src="{% static 'img/logo3.jpg' %}"  style=" height: 50px; width: 50px; 
+                                          border-radius:160px; "/>
+        </a>
+                                         <div   class=" text-uppercase font-weight-bold text-light pt-4">
+                                             Fundacion
+                                         </div>
+           
+
+
+           </div>
+
+    {% if user.is_authenticated %}        
+      
+         
+    <span class="icon-menu bg-warning" id="btn-menu"><i class="fas fa-bars text-dark"></i></span>
+       
+       
+           <div class="nav" id="nav">
+             <ul class="menu">
+        
+                
+
+    {% else %}
+    {% endif %} 
+
+
+
+                
+   
+   {% if perms.talleres %} 
+                <li class="nav-item " data-toggle="tooltip" data-placement="top" title="Modulo de Talleres">
+                    
+                        <a href="{% url 'talleres:taller' %}" class="menu__link" >
+                        <h4><i class="fas fa-toolbox "></i>    </h4>
+                    </a>
+                    
+                </li>
+                {%else%}
+    {% endif %}
+
+
+   {% if perms.persona %}
+                <li class="nav-item" data-toggle="tooltip" data-placement="top" title="Modulo de Voluntarios">
+                    
+                        <a href="{% url 'persona:personas' %}" class="menu__link" >
+                        <h4> <i class="fas fa-users "></i>   </h4>
+                    </a>
+                    
+                </li>
+{%else%}
+    {% endif %}
+
+         {% if perms.donacion %}       
+                <li class="nav-item" data-toggle="tooltip" data-placement="top" title="Modulo de Donaciones">
+                    
+                        
+                        <a href="{% url 'donacion:donaciones' %}" class="menu__link" >
+                        <h4> <i class="fas fa-hand-holding-heart "></i>   </h4>
+                    </a>
+                    
+                </li>
+            {%else%}
+    {% endif %}
+
+
+            {% if perms.programa %} 
+                <li class="nav-item" data-toggle="tooltip" data-placement="top" title="Modulo de Programas">
+                
+                        <a href="{% url 'programa:programas' %}" class="menu__link" >
+                        <h4> <i class="fas fa-project-diagram "></i>   </h4>
+                    </a>
+                    
+                </li>
+                {%else%}
+    {% endif %}
+
+
+  <!-- 
+                <li class="menu__item" data-toggle="tooltip" data-placement="top" title="Graficos Estadisticos">
+                    <a href="#" class="menu__link">
+                        <i class="fas fa-chart-bar text-white"></i>
+                    </a>
+                </li>
+                 -->
+
+
+    
+
+
+
+    {% if perms.persona.add_persona %}
+                <li class="nav-item "  data-toggle="tooltip" data-placement="top" title="Modulo de Usuarios">
+                   <a href="{% url 'persona:usuarios_list' %}" class="menu__link" >
+                        <h4>  <i class="fas fa-address-book "></i>  </h4>
+                    </a>
+                </li>
+                {%else%}
+
+
+    {% endif %}
+
+
+    {% if perms. %}
+                <li class="nav-item" data-toggle="tooltip" data-placement="top" title="Modulo de Reportes">
+                    
+                        <a href="{% url 'donacion:reportes' %}" class="menu__link" >
+                        <h4> <i class="fas fa-file "></i>   </h4>
+                    </a>
+                    
+                </li>
+                {%else%}
+
+    {% endif %}
+    
+
+
+    {% if perms.users.groups %}            
+                
+                <li class="nav-item" data-toggle="tooltip" data-placement="top" title="Modulo de Comentarios">
+                    <a href="{% url 'comentario-modulo:comentario_list' %}" class="menu__link">
+                        <i class="fas fa-comment-alt "></i>
+                    </a>
+                </li>
+
+                <li class="nav-item" data-toggle="tooltip" data-placement="top" title="Notificacion">
+                    <a href="{% url 'persona:correo' %}" class="menu__link">
+                        <i class="fas fa-envelope "></i>
+                    </a>
+                </li>
+    {% else %}
+    {% endif %}
+  <!--   <li class="nav-item "  data-toggle="tooltip" data-placement="top" title="Servicios Ofrecidos">
+                    <a href="{% url 'persona:update'  %}" class=" menu__link  " >
+                       <h4> <i class="fas fa-user-clock "></i> </h4> 
+                    </a>
+                </li> -->
+    {% if user.is_authenticated %}
+
+
+            <li class="nav-item "  data-toggle="tooltip" data-placement="top" title="Mi Perfil">
+                    <a href="{% url 'persona:update'  %}" class=" menu__link  " >
+                       <h4> <i class="fas fa-user-circle "></i> </h4> 
+                    </a>
+                </li>
+    {% endif %}
+
+  
+       {% if perms.users.groups %}
+      
+                <li class="nav-item"  data-toggle="tooltip" data-placement="top" title="Modulo Administrativo">
+                
+                        <a href="{% url 'admin:index' %}" class="menu__link" >
+                        <h4>   <i class="fas fa-user-shield "></i> </h4>
+                    </a>
+                    
+                </li>
+                {%else%}
+
+    {% endif %}
+
+
+            
+       
+           
+        
+
+               
+
+            </ul>
+        </div>
+    </div>
+         
+      </nav>
+    
+    <script type="text/javascript" src="{% static 'js/menu.js' %}"></script>
+
