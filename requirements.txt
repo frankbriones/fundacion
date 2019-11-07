@@ -63,9 +63,7 @@ requests==2.18.4
 rsa==3.4.2
 six==1.10.0
 trml2pdf==0.4.2
-twilio==6.8.1
 typing==3.6.2
-update==0.4.4
 uritemplate==3.0.0
 urllib3==1.22
 virtualenv==15.1.0
