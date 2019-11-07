@@ -120,11 +120,11 @@ WSGI_APPLICATION = 'fund5.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'd6fvlh41470iqq',
-        'USER': 'dvfsgpacwilveq',
-        'PASSWORD': '968037bebb34b80b81a11e38ffd838de39c5bf86dc13f4b5858bd14e2e48ab26',
-        'HOST': 'ec2-23-21-94-99.compute-1.amazonaws.com',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'dctm7eknu2bs2k',
+        'USER': 'uhgwdtevcmrdrg',
+        'PASSWORD': '3cfce4a95f05acce0479c89013844f7302d1e07384b13b6e3d3101a633e083af',
+        'HOST': 'ec2-54-197-238-238.compute-1.amazonaws.com',
         'PORT': '5432',
     }
 }
