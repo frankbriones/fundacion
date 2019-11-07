@@ -120,7 +120,7 @@ WSGI_APPLICATION = 'fund5.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'db2l6eba24upip',
         'USER': 'lmacyyqwknguvp',
         'PASSWORD': '7608d5c04dfe2fcfd5d0c39b997db01e30e2d9a65409e4ffd260b09a8b79e4a5',
