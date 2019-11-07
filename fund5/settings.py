@@ -171,12 +171,12 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 # en produccion dirige al path de los estaticos
-#STATIC_ROOT = '/Users/franklin/Desktop/Fund4/fund5/static/'
+STATIC_ROOT = '/Users/franklin/Desktop/FUNDACION/fund5/static/'
 
 
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'static'),
-)
+# STATICFILES_DIRS = (
+#     os.path.join(BASE_DIR, 'static'),
+# )
 
 
 
