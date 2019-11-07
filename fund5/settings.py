@@ -121,11 +121,11 @@ WSGI_APPLICATION = 'fund5.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'FND5',
+        'NAME': 'fundacion',
         'USER': 'name',
         'PASSWORD': '',
         'HOST': 'localhost',
-        'PORT': '',      
+        'PORT': '',
     }
 }
 
