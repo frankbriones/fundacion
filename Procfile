@@ -1,1 +1,1 @@
-web: gunicorn fund5.wsgi --log-file -
+web: gunicorn fund5.wsgi 
